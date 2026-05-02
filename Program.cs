@@ -31,7 +31,7 @@ namespace ZZZ_PS_Starter
         private CheckBox _noClient;
 
         private PathNames _pathNames = new PathNames();
-        private string _settingsPath = @"HKEY_CURRENT_USER\Software\ZZZServerStarter";
+        private string _settingsPath = @"HKEY_CURRENT_USER\Software\ZZZ_PS_Starter";
         private int _lableSpace = 25;
         private int _textBoxSpace = 35;
         private Size _windowSize = new Size(600, 360);
