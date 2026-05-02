@@ -36,7 +36,7 @@ namespace ZZZ_PS_Starter
         private int _textBoxSpace = 35;
         private Size _windowSize = new Size(600, 360);
 
-        public LauncherForm(string formName = "ZZZ Server Launcher")
+        public LauncherForm(string formName = "ZZZ PS Starter")
         {
             Text = formName;
             Icon = Resources.Icon;
