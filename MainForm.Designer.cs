@@ -103,8 +103,7 @@ namespace ZZZ_PS_Launcher
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             BackgroundImage = Properties.Resources.MainBackground;
             BackgroundImageLayout = ImageLayout.Zoom;
             ClientSize = new Size(848, 477);
