@@ -9,7 +9,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
 	  <ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
 	  <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
+	  <ApplicationIcon>content\Icon.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="content\Icon.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
