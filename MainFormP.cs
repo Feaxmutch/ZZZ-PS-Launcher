@@ -9,6 +9,7 @@ namespace ZZZ_PS_Launcher
         private Process _hoyoProcess;
         private Process _kcpshimProcess;
         private string _linuxCommand = "zig build run-dpsv & zig build run-gamesv";
+        private string _linuxZigUsing = "zvm use rr";
 
         public MainFormP(IMainForm mainForm)
         {
@@ -57,7 +58,7 @@ namespace ZZZ_PS_Launcher
             {
                 FileName = "wsl.exe",
                 WorkingDirectory = folderPath,
-                Arguments = $"--cd \"{folderPath}\" -u root -- bash -i -c \"{_linuxCommand}\"",
+                Arguments = $"--cd \"{folderPath}\"-- bash -i -c \"{_linuxZigUsing} & {_linuxCommand}\"",
                 UseShellExecute = true,
                 Verb = "runas"
             };
