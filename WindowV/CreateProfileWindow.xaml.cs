@@ -1,20 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using ZZZ_PS_Launcher_2.WindowI;
-using ZZZ_PS_Launcher_2.WindowP;
+﻿using System.Windows;
+using ZZZ_PS_Launcher.WindowI;
+using ZZZ_PS_Launcher.WindowP;
 
-namespace ZZZ_PS_Launcher_2
+namespace ZZZ_PS_Launcher
 {
     /// <summary>
     /// Логика взаимодействия для SettingsWindow.xaml

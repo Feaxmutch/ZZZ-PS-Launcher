@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ZZZ_PS_Launcher_2.WindowI
+﻿namespace ZZZ_PS_Launcher.WindowI
 {
     internal interface ICreateProfileWindow
     {

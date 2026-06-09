@@ -1,15 +1,10 @@
 ﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using ZZZ_PS_Launcher_2.WindowI;
+using ZZZ_PS_Launcher.WindowI;
 
-namespace ZZZ_PS_Launcher_2.WindowP
+namespace ZZZ_PS_Launcher.WindowP
 {
     internal class CreateProfileWindowP
     {

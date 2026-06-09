@@ -1,7 +1,7 @@
 ﻿using Microsoft.Win32;
 using System.Windows;
 
-namespace ZZZ_PS_Launcher_2
+namespace ZZZ_PS_Launcher
 {
     /// <summary>
     /// Interaction logic for App.xaml

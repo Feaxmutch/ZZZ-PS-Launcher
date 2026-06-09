@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using ZZZ_PS_Launcher_2.WindowP;
+using ZZZ_PS_Launcher.WindowP;
 
-namespace ZZZ_PS_Launcher_2
+namespace ZZZ_PS_Launcher
 {
     public partial class MainWindow : Window
     {

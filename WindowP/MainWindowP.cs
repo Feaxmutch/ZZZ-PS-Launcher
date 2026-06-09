@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using ZZZ_PS_Launcher_2.WindowI;
-using ZZZ_PS_Launcher_2.WindowV;
+using ZZZ_PS_Launcher.WindowI;
+using ZZZ_PS_Launcher.WindowV;
 
-namespace ZZZ_PS_Launcher_2.WindowP
+namespace ZZZ_PS_Launcher.WindowP
 {
     class MainWindowP
     {
