@@ -1,0 +1,159 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "F:\\\u0434\u0430\u043D\u0438\u043B\\Projects\\visual_studio_projects\\ZZZ-PS-Launcher_2\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{92B4A2FE-355C-9228-676F-8C2326954076}|ZZZ-PS-Launcher_2.csproj|f:\\\u0434\u0430\u043D\u0438\u043B\\projects\\visual_studio_projects\\zzz-ps-launcher_2\\windowp\\mainwindowp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{92B4A2FE-355C-9228-676F-8C2326954076}|ZZZ-PS-Launcher_2.csproj|solutionrelative:windowp\\mainwindowp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{92B4A2FE-355C-9228-676F-8C2326954076}|ZZZ-PS-Launcher_2.csproj|f:\\\u0434\u0430\u043D\u0438\u043B\\projects\\visual_studio_projects\\zzz-ps-launcher_2\\windowv\\profileselectorwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{92B4A2FE-355C-9228-676F-8C2326954076}|ZZZ-PS-Launcher_2.csproj|solutionrelative:windowv\\profileselectorwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{92B4A2FE-355C-9228-676F-8C2326954076}|ZZZ-PS-Launcher_2.csproj|f:\\\u0434\u0430\u043D\u0438\u043B\\projects\\visual_studio_projects\\zzz-ps-launcher_2\\windowp\\createprofilewindowp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{92B4A2FE-355C-9228-676F-8C2326954076}|ZZZ-PS-Launcher_2.csproj|solutionrelative:windowp\\createprofilewindowp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{92B4A2FE-355C-9228-676F-8C2326954076}|ZZZ-PS-Launcher_2.csproj|f:\\\u0434\u0430\u043D\u0438\u043B\\projects\\visual_studio_projects\\zzz-ps-launcher_2\\profilesettingname.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{92B4A2FE-355C-9228-676F-8C2326954076}|ZZZ-PS-Launcher_2.csproj|solutionrelative:profilesettingname.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{92B4A2FE-355C-9228-676F-8C2326954076}|ZZZ-PS-Launcher_2.csproj|f:\\\u0434\u0430\u043D\u0438\u043B\\projects\\visual_studio_projects\\zzz-ps-launcher_2\\windowv\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{92B4A2FE-355C-9228-676F-8C2326954076}|ZZZ-PS-Launcher_2.csproj|solutionrelative:windowv\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{92B4A2FE-355C-9228-676F-8C2326954076}|ZZZ-PS-Launcher_2.csproj|f:\\\u0434\u0430\u043D\u0438\u043B\\projects\\visual_studio_projects\\zzz-ps-launcher_2\\windowv\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{92B4A2FE-355C-9228-676F-8C2326954076}|ZZZ-PS-Launcher_2.csproj|solutionrelative:windowv\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{92B4A2FE-355C-9228-676F-8C2326954076}|ZZZ-PS-Launcher_2.csproj|f:\\\u0434\u0430\u043D\u0438\u043B\\projects\\visual_studio_projects\\zzz-ps-launcher_2\\windowv\\createprofilewindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{92B4A2FE-355C-9228-676F-8C2326954076}|ZZZ-PS-Launcher_2.csproj|solutionrelative:windowv\\createprofilewindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{92B4A2FE-355C-9228-676F-8C2326954076}|ZZZ-PS-Launcher_2.csproj|f:\\\u0434\u0430\u043D\u0438\u043B\\projects\\visual_studio_projects\\zzz-ps-launcher_2\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{92B4A2FE-355C-9228-676F-8C2326954076}|ZZZ-PS-Launcher_2.csproj|solutionrelative:app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ProfileSettingName.cs",
+              "DocumentMoniker": "F:\\\u0434\u0430\u043D\u0438\u043B\\Projects\\visual_studio_projects\\ZZZ-PS-Launcher_2\\ProfileSettingName.cs",
+              "RelativeDocumentMoniker": "ProfileSettingName.cs",
+              "ToolTip": "F:\\\u0434\u0430\u043D\u0438\u043B\\Projects\\visual_studio_projects\\ZZZ-PS-Launcher_2\\ProfileSettingName.cs",
+              "RelativeToolTip": "ProfileSettingName.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-09T19:43:47.641Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CreateProfileWindowP.cs",
+              "DocumentMoniker": "F:\\\u0434\u0430\u043D\u0438\u043B\\Projects\\visual_studio_projects\\ZZZ-PS-Launcher_2\\WindowP\\CreateProfileWindowP.cs",
+              "RelativeDocumentMoniker": "WindowP\\CreateProfileWindowP.cs",
+              "ToolTip": "F:\\\u0434\u0430\u043D\u0438\u043B\\Projects\\visual_studio_projects\\ZZZ-PS-Launcher_2\\WindowP\\CreateProfileWindowP.cs",
+              "RelativeToolTip": "WindowP\\CreateProfileWindowP.cs",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAAAF8AAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-09T19:40:21.563Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CreateProfileWindow.xaml.cs",
+              "DocumentMoniker": "F:\\\u0434\u0430\u043D\u0438\u043B\\Projects\\visual_studio_projects\\ZZZ-PS-Launcher_2\\WindowV\\CreateProfileWindow.xaml.cs",
+              "RelativeDocumentMoniker": "WindowV\\CreateProfileWindow.xaml.cs",
+              "ToolTip": "F:\\\u0434\u0430\u043D\u0438\u043B\\Projects\\visual_studio_projects\\ZZZ-PS-Launcher_2\\WindowV\\CreateProfileWindow.xaml.cs",
+              "RelativeToolTip": "WindowV\\CreateProfileWindow.xaml.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAIAzwFgAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-09T19:40:17.065Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "F:\\\u0434\u0430\u043D\u0438\u043B\\Projects\\visual_studio_projects\\ZZZ-PS-Launcher_2\\WindowV\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "WindowV\\MainWindow.xaml",
+              "ToolTip": "F:\\\u0434\u0430\u043D\u0438\u043B\\Projects\\visual_studio_projects\\ZZZ-PS-Launcher_2\\WindowV\\MainWindow.xaml",
+              "RelativeToolTip": "WindowV\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-06-09T17:21:21.949Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "F:\\\u0434\u0430\u043D\u0438\u043B\\Projects\\visual_studio_projects\\ZZZ-PS-Launcher_2\\WindowV\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "WindowV\\MainWindow.xaml.cs",
+              "ToolTip": "F:\\\u0434\u0430\u043D\u0438\u043B\\Projects\\visual_studio_projects\\ZZZ-PS-Launcher_2\\WindowV\\MainWindow.xaml.cs",
+              "RelativeToolTip": "WindowV\\MainWindow.xaml.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAQwBUAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-09T17:21:12.441Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindowP.cs",
+              "DocumentMoniker": "F:\\\u0434\u0430\u043D\u0438\u043B\\Projects\\visual_studio_projects\\ZZZ-PS-Launcher_2\\WindowP\\MainWindowP.cs",
+              "RelativeDocumentMoniker": "WindowP\\MainWindowP.cs",
+              "ToolTip": "F:\\\u0434\u0430\u043D\u0438\u043B\\Projects\\visual_studio_projects\\ZZZ-PS-Launcher_2\\WindowP\\MainWindowP.cs",
+              "RelativeToolTip": "WindowP\\MainWindowP.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAwwEAAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-09T17:19:33.109Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ProfileSelectorWindow.xaml.cs",
+              "DocumentMoniker": "F:\\\u0434\u0430\u043D\u0438\u043B\\Projects\\visual_studio_projects\\ZZZ-PS-Launcher_2\\WindowV\\ProfileSelectorWindow.xaml.cs",
+              "RelativeDocumentMoniker": "WindowV\\ProfileSelectorWindow.xaml.cs",
+              "ToolTip": "F:\\\u0434\u0430\u043D\u0438\u043B\\Projects\\visual_studio_projects\\ZZZ-PS-Launcher_2\\WindowV\\ProfileSelectorWindow.xaml.cs",
+              "RelativeToolTip": "WindowV\\ProfileSelectorWindow.xaml.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAuwEYAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-09T20:05:08.791Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "F:\\\u0434\u0430\u043D\u0438\u043B\\Projects\\visual_studio_projects\\ZZZ-PS-Launcher_2\\App.xaml.cs",
+              "RelativeDocumentMoniker": "App.xaml.cs",
+              "ToolTip": "F:\\\u0434\u0430\u043D\u0438\u043B\\Projects\\visual_studio_projects\\ZZZ-PS-Launcher_2\\App.xaml.cs",
+              "RelativeToolTip": "App.xaml.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAACMAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-08T21:24:51.872Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

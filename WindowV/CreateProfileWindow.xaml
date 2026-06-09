@@ -1,0 +1,39 @@
+﻿<Window x:Class="ZZZ_PS_Launcher_2.CreateProfileWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZZZ_PS_Launcher_2"
+        mc:Ignorable="d"
+        Title="Create Profile" Height="400" Width="584"
+        Background="LightGray">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <TextBox Name="TextBox_Name" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="23" Width="420"/>
+        <TextBox Name="TextBox_Commit" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="23" Width="420"/>
+        <TextBox Name="TextBox_Server" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="23" Width="420"/>
+        <TextBox Name="TextBox_Hoyo" Grid.Row="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="23" Width="420"/>
+        <TextBox Name="TextBox_Kcpshim" Grid.Row="5" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="23" Width="420"/>
+        <TextBox Name="TextBox_Client" Grid.Row="6" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="23" Width="420"/>
+        <Label Grid.Row="1" Content="Имя профиля:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
+        <Label Grid.Row="2" Content="Коммит сервера:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
+        <Label Grid.Row="3" Content="Путь к папке сервера:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
+        <Label Grid.Row="4" Content="Путь к Hoyo-sdk:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
+        <Label Grid.Row="5" Content="Путь к Kcpshim:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
+        <Label Grid.Row="6" Content="Путь к Yidhari (патчеру клиента):" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
+        <Button Content="Указать путь" Click="ServerButton_Click" Background="WhiteSmoke" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="110" Height="23" Margin="0,0,30,0"/>
+        <Button Content="Указать путь" Click="HoyoButton_Click" Background="WhiteSmoke" Grid.Row="4" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="110" Height="23" Margin="0,0,30,0"/>
+        <Button Content="Указать путь" Click="KcpshimButton_Click" Background="WhiteSmoke" Grid.Row="5" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="110" Height="23" Margin="0,0,30,0"/>
+        <Button Content="Указать путь" Click="ClientButton_Click" Background="WhiteSmoke" Grid.Row="6" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="110" Height="23" Margin="0,0,30,0"/>
+        <Button Content="Сохранить" Click="SaveSettingsButton_Click" Background="WhiteSmoke" Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" Height="40"/>
+    </Grid>
+</Window>

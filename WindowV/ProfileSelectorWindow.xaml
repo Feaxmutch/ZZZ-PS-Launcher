@@ -1,0 +1,24 @@
+﻿<Window x:Class="ZZZ_PS_Launcher_2.WindowV.ProfileSelectorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZZZ_PS_Launcher_2.WindowV"
+        mc:Ignorable="d"
+        Closing="Window_Closing"
+        Title="Select Profile" Height="200" Width="300" ResizeMode="CanMinimize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="15"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="15"/>
+        </Grid.ColumnDefinitions>
+        
+        <ComboBox Name="ComboBox_Profiles" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" />
+        <Button Name="Button_Add" Content="Добавить" Click="OnAddClick" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="33" Width="121" FontSize="16" />
+    </Grid>
+</Window>
