@@ -20,18 +20,21 @@ namespace ZZZ_PS_Launcher.WindowV
 
         private void UpdateComboBox()
         {
+            Profile selectedProfile = App.GetCurrentProfile();
             Profile[] profiles = App.GetAllProfiles();
             string[] profileNames = profiles.Select(profile => profile.Name).ToArray();
             ComboBox_Profiles.Items.Clear();
 
-            foreach (var name in profileNames)
+            foreach (var item in profileNames)
             {
-                ComboBox_Profiles.Items.Add(name);
+                ComboBox_Profiles.Items.Add(item);
             }
 
-            if (App.GetCurrentProfile().Name != string.Empty)
+            var nameItems = ComboBox_Profiles.Items.Cast<string>().ToList();
+
+            if (selectedProfile.Name != string.Empty)
             {
-                ComboBox_Profiles.SelectedIndex = ComboBox_Profiles.Items.IndexOf(App.GetCurrentProfile().Name);
+                ComboBox_Profiles.SelectedIndex = nameItems.IndexOf(nameItems.Where(item => item == selectedProfile.Name).First());
             }
         }
 
@@ -59,6 +62,11 @@ namespace ZZZ_PS_Launcher.WindowV
                 Profile profile = profiles.Where(prof => prof.Name == selectedProfile).First();
                 App.SetProfile(profile);
             }
+        }
+
+        private void OnActivated(object sender, EventArgs e)
+        {
+            UpdateComboBox();
         }
     }
 }

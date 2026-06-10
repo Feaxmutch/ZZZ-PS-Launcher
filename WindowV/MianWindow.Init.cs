@@ -19,8 +19,7 @@ namespace ZZZ_PS_Launcher
             borderFactory.AppendChild(contentPresenterFactory);
             var universalTemplate = new ControlTemplate(typeof(Button)) { VisualTree = borderFactory };
             Button_Settings.Template = universalTemplate;
-            Button_LaunchClient.Template = universalTemplate;
-            Button_StartServer.Template = universalTemplate;
+            Button_launch.Template = universalTemplate;
         }
     }
 }

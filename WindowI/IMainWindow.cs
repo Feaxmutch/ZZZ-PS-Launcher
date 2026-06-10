@@ -3,7 +3,7 @@
     internal interface IMainWindow
     {
         event Action OpeningSettings;
-        event Action LaunchingServer;
-        event Action LaunchingClient;
+        event Action Launching;
+        event Action WindowClosed;
     }
 }

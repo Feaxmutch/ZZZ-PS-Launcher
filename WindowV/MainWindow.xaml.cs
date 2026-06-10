@@ -12,8 +12,8 @@ namespace ZZZ_PS_Launcher
     public partial class MainWindow : Window, IMainWindow
     {
         public event Action OpeningSettings;
-        public event Action LaunchingServer;
-        public event Action LaunchingClient;
+        public event Action Launching;
+        public event Action WindowClosed;
 
         public MainWindow()
         {
@@ -44,14 +44,14 @@ namespace ZZZ_PS_Launcher
             OpeningSettings?.Invoke();
         }
 
-        private void LaunchServer_Click(object sender, RoutedEventArgs e)
+        private void Launch_Click(object sender, RoutedEventArgs e)
         {
-            LaunchingServer?.Invoke();
+            Launching?.Invoke();
         }
 
-        private void LaunchClient_Click(object sender, RoutedEventArgs e)
+        private void OnClosed(object sender, EventArgs e)
         {
-            LaunchingClient?.Invoke();
+            WindowClosed?.Invoke();
         }
     }
 }

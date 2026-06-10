@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZZZ_PS_Launcher"
         mc:Ignorable="d"
+        Closed="OnClosed"
+        WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="450" Width="800" ResizeMode="CanMinimize">
     <Grid>
         <Image Source="/content/MainBackground.png"
@@ -35,30 +37,15 @@
                     <ImageBrush ImageSource="/content/settings_button.png"/>
                 </Button.Background>
             </Button>
-            <Button Name="Button_LaunchClient"
-                    Click="LaunchClient_Click"
-                    MouseEnter="OnButtonEnter"
-                    MouseLeave="OnButtonLeave"
-                    Grid.Column="1" 
-                    Grid.Row="1"
-                    BorderThickness="0"
-                    Content="Запустить клиент"
-                    FontWeight="UltraBold"
-                    FontSize="16"
-                    Padding="30,0,0,0">
-                <Button.Background>
-                    <ImageBrush ImageSource="/content/PlayButton.png"/>
-                </Button.Background>
-            </Button>
-            <Button Name="Button_StartServer"
-                    Click="LaunchServer_Click"
+            <Button Name="Button_launch"
+                    Click="Launch_Click"
                     MouseEnter="OnButtonEnter"
                     MouseLeave="OnButtonLeave"
                     Grid.Column="1" 
                     Grid.Row="2"
                     BorderThickness="0"
                     FontWeight="UltraBold"
-                    Content="Запустить сервер"
+                    Content="Начать игру"
                     FontSize="16"
                     Padding="30,0,0,0">
                 <Button.Background>

@@ -8,8 +8,6 @@ namespace ZZZ_PS_Launcher.WindowP
 {
     internal class CreateProfileWindowP
     {
-        private string _linuxCatFileCommand = "git cat-file -e";
-        private string _linuxEchoCommand = "2>/dev/null && echo \"Yes\" || echo \"No\"";
         private ICreateProfileWindow _windowV;
 
         public CreateProfileWindowP(ICreateProfileWindow window)
@@ -17,7 +15,6 @@ namespace ZZZ_PS_Launcher.WindowP
             _windowV = window;
             _windowV.ClickedSelect += OnSelectClick;
             _windowV.ClickedSave += OnSaveClick;
-            _windowV.Hiding += OnHiding;
         }
 
         private bool FieldsIsValide()
@@ -27,7 +24,6 @@ namespace ZZZ_PS_Launcher.WindowP
             string hoyoPath = _windowV.GetTextBox(ProfileSettingName.Hoyo);
             string kcpshimPath = _windowV.GetTextBox(ProfileSettingName.Kcpshim);
             string name = _windowV.GetTextBox(ProfileSettingName.Name);
-            string serverCommit = _windowV.GetTextBox(ProfileSettingName.ServerCommit);
             string messageStart = "Указан неверный путь к";
 
             if ((Directory.Exists(serverPath + "\\dpsv") && Directory.Exists(serverPath + "\\gamesv")) == false)
@@ -60,42 +56,7 @@ namespace ZZZ_PS_Launcher.WindowP
                 return false;
             }
 
-            if (IsCommitExists(serverCommit) == false)
-            {
-                MessageBox.Show($"Коммита {serverCommit} не существует \n или произошла непредвиденая ошибка");
-                return false;
-            }
-
             return true;
-        }
-
-        private bool IsCommitExists(string serverCommit)
-        {
-            string serverPath = _windowV.GetTextBox(ProfileSettingName.Server);
-            
-            ProcessStartInfo checkCommitInfo = new ProcessStartInfo()
-            {
-                FileName = "wsl.exe",
-                WorkingDirectory = serverPath,
-                Arguments = $"--cd \"{serverPath}\"-- bash -c \"{_linuxCatFileCommand} {serverCommit} {_linuxEchoCommand}\"",
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                Verb = "runas"
-            };
-
-            Process process = Process.Start(checkCommitInfo);
-            if (process == null) return false;
-            string output = process.StandardOutput.ReadToEnd();
-            process.WaitForExit();
-
-            if (output.Contains("Yes"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
 
         private void SelectFolder()
@@ -105,7 +66,7 @@ namespace ZZZ_PS_Launcher.WindowP
             folderDialog.Title = "Выберите папку с сервером";
             folderDialog.InitialDirectory = @"\\wsl.localhost";
 
-            if ((bool)folderDialog.ShowDialog())
+            if (folderDialog.ShowDialog() ?? false)
             {
                 _windowV.SetTextBox(ProfileSettingName.Server, folderDialog.FolderName);
             }
@@ -118,7 +79,7 @@ namespace ZZZ_PS_Launcher.WindowP
             fileDialog.Filter = "Исполняемые файлы (*.exe)|*.exe";
             fileDialog.Title = "Выберите exe файл";
 
-            if ((bool)fileDialog.ShowDialog())
+            if (fileDialog.ShowDialog() ?? false)
             {
                 _windowV.SetTextBox(settingName, fileDialog.FileName);
             }
@@ -143,11 +104,6 @@ namespace ZZZ_PS_Launcher.WindowP
                 _windowV.ApplyFromTextBoxes();
                 _windowV.Close();
             }
-        }
-
-        private void OnHiding()
-        {
-            _windowV.ApplyFromTextBoxes();
         }
     }
 }

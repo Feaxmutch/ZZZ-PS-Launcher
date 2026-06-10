@@ -13,7 +13,9 @@ namespace ZZZ_PS_Launcher.WindowP
         private Process _serverProcess;
         private Process _hoyoProcess;
         private Process _kcpshimProcess;
-        private string _linuxGitRev = "git rev-parse --short HEAD";
+        private string _linuxGitPull = "git pull";
+        private string _linuxGitReset = "git reset --hard HEAD";
+        private string _linuxGitRev = "git symbolic-ref --short -q HEAD || git rev-parse --short HEAD";
         private string _linuxGitCheckout = "git checkout";
         private string _linuxCommand = "zig build run-dpsv & zig build run-gamesv";
         private string _linuxZigUsing = "zvm use rr";
@@ -22,10 +24,8 @@ namespace ZZZ_PS_Launcher.WindowP
         {
             _mainFormV = window;
             _mainFormV.OpeningSettings += OnOpenSettings;
-            _mainFormV.LaunchingServer += OnLainchServer;
-            _mainFormV.LaunchingClient += OnLaunchClient;
-
-
+            _mainFormV.Launching += OnLaunchClient;
+            _mainFormV.WindowClosed += OnClosed;
         }
 
         private string GetCommitOnServer()
@@ -39,6 +39,7 @@ namespace ZZZ_PS_Launcher.WindowP
                 Arguments = $"--cd \"{serverPath}\"-- bash -c \"{_linuxGitRev}\"",
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
+                WindowStyle = ProcessWindowStyle.Minimized,
                 Verb = "runas"
             };
 
@@ -46,23 +47,43 @@ namespace ZZZ_PS_Launcher.WindowP
             if (process == null) return string.Empty;
             string output = process.StandardOutput.ReadToEnd();
             process.WaitForExit();
-            return output;
+            return output.TrimEnd();
         }
 
         private void SetCommitOnServer(string newCommit)
         {
             string serverPath = App.GetCurrentProfile().Patches.ServerPatch;
 
+            ProcessStartInfo checkCommitInfo = new ProcessStartInfo()
+            {
+                FileName = "wsl.exe",
+                WorkingDirectory = serverPath,
+                Arguments = $"--cd \"{serverPath}\"-- bash -c \"{_linuxGitReset} && {_linuxGitCheckout} {newCommit}\"",
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                WindowStyle = ProcessWindowStyle.Minimized,
+                Verb = "runas"
+            };
 
+            Process process = Process.Start(checkCommitInfo);
+            if (process == null) return;
+            process.WaitForExit();
+        }
+
+        private void PullRepository()
+        {
+            string serverPath = App.GetCurrentProfile().Patches.ServerPatch;
 
             ProcessStartInfo checkCommitInfo = new ProcessStartInfo()
             {
                 FileName = "wsl.exe",
                 WorkingDirectory = serverPath,
-                Arguments = $"--cd \"{serverPath}\"-- bash -c \"git reset --hard HEAD && {_linuxGitCheckout} {newCommit}\"",
+                Arguments = $"--cd \"{serverPath}\"-- bash -c \"{_linuxGitReset} && {_linuxGitPull}\"",
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
+                WindowStyle = ProcessWindowStyle.Minimized,
                 Verb = "runas"
             };
 
@@ -83,12 +104,18 @@ namespace ZZZ_PS_Launcher.WindowP
                 SetCommitOnServer(commitOnProfile);
             }
 
+            if (commitOnProfile == "master" || commitOnProfile == "prod")
+            {
+                PullRepository();
+            }
+
             ProcessStartInfo startServerInfo = new ProcessStartInfo()
             {
                 FileName = "wsl.exe",
                 WorkingDirectory = folderPath,
                 Arguments = $"--cd \"{folderPath}\"-- bash -i -c \"{_linuxZigUsing} & {_linuxCommand}\"",
                 UseShellExecute = true,
+                WindowStyle = ProcessWindowStyle.Minimized,
                 Verb = "runas"
             };
 
@@ -113,6 +140,7 @@ namespace ZZZ_PS_Launcher.WindowP
                 FileName = fullPath,
                 WorkingDirectory = Path.GetDirectoryName(fullPath),
                 UseShellExecute = true,
+                WindowStyle = ProcessWindowStyle.Minimized,
                 Verb = "runas"
             };
 
@@ -166,6 +194,13 @@ namespace ZZZ_PS_Launcher.WindowP
             }
         }
 
+        private void KillAll()
+        {
+            KillProcess(ref _serverProcess);
+            KillProcess(ref _hoyoProcess);
+            KillProcess(ref _kcpshimProcess);
+        }
+
         private void OnOpenSettings()
         {
             if (_profileSelector == null || _profileSelector.IsDisposed)
@@ -173,25 +208,8 @@ namespace ZZZ_PS_Launcher.WindowP
                 _profileSelector = new();
             }
 
+            _profileSelector.Owner = _mainFormV as MainWindow;
             _profileSelector.Show();
-        }
-
-        private void OnLainchServer()
-        {
-            Profile profile = App.GetCurrentProfile();
-
-            if (profile.Name == string.Empty)
-            {
-                MessageBox.Show("Профиль не выбран. Пожалуйста выберите профиль");
-                return;
-            }
-
-            KillProcess(ref _serverProcess);
-            KillProcess(ref _hoyoProcess);
-            KillProcess(ref _kcpshimProcess);
-            RunServer(profile.Patches.ServerPatch);
-            RunWinExe(ProfileSettingName.Hoyo, profile.Patches.HoyoPatch);
-            RunWinExe(ProfileSettingName.Kcpshim, profile.Patches.KcpshimPatch);
         }
 
         private void OnLaunchClient()
@@ -204,7 +222,17 @@ namespace ZZZ_PS_Launcher.WindowP
                 return;
             }
 
+            KillAll();
+            RunServer(profile.Patches.ServerPatch);
+            RunWinExe(ProfileSettingName.Hoyo, profile.Patches.HoyoPatch);
+            RunWinExe(ProfileSettingName.Kcpshim, profile.Patches.KcpshimPatch);
             RunWinExe(ProfileSettingName.Client, profile.Patches.ClientPatch);
+        }
+
+        private void OnClosed()
+        {
+            KillAll();
+            App.SaveSelectedProfile();
         }
     }
 }

@@ -25,6 +25,17 @@ namespace ZZZ_PS_Launcher
             InitializeComponent();
             CreateProfileWindowP presenter = new(this);
             Closed += (s, e) => IsDisposed = true;
+            List<CommitData> items = new();
+            items.Add(new CommitData("Самый последний BETA", "master"));
+            items.Add(new CommitData("Самый последний PROD", "prod"));
+            
+            foreach (var commit in App.Commits)
+            {
+                items.Add(commit);
+            }
+
+            ComboBox_Commit.ItemsSource = items;
+            ComboBox_Commit.SelectedIndex = 0;
         }
 
         public void ApplyFromTextBoxes()
@@ -37,7 +48,8 @@ namespace ZZZ_PS_Launcher
                 KcpshimPatch = TextBox_Kcpshim.Text
             };
 
-            Profile profile = new(TextBox_Name.Text, patches, TextBox_Commit.Text);
+            string commit = (string)ComboBox_Commit.SelectedValue;
+            Profile profile = new(TextBox_Name.Text, patches, commit);
             App.SaveProfile(profile);
         }
 
@@ -75,7 +87,7 @@ namespace ZZZ_PS_Launcher
                 case ProfileSettingName.Name:
                     return TextBox_Name.Text;
                 case ProfileSettingName.ServerCommit:
-                    return TextBox_Commit.Text;
+                    return (string)ComboBox_Commit.SelectedValue;
             }
 
             return string.Empty;

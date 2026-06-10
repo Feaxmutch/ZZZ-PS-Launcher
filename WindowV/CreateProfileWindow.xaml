@@ -19,7 +19,6 @@
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <TextBox Name="TextBox_Name" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="23" Width="420"/>
-        <TextBox Name="TextBox_Commit" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="23" Width="420"/>
         <TextBox Name="TextBox_Server" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="23" Width="420"/>
         <TextBox Name="TextBox_Hoyo" Grid.Row="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="23" Width="420"/>
         <TextBox Name="TextBox_Kcpshim" Grid.Row="5" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="23" Width="420"/>
@@ -35,5 +34,6 @@
         <Button Content="Указать путь" Click="KcpshimButton_Click" Background="WhiteSmoke" Grid.Row="5" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="110" Height="23" Margin="0,0,30,0"/>
         <Button Content="Указать путь" Click="ClientButton_Click" Background="WhiteSmoke" Grid.Row="6" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="110" Height="23" Margin="0,0,30,0"/>
         <Button Content="Сохранить" Click="SaveSettingsButton_Click" Background="WhiteSmoke" Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" Height="40"/>
+        <ComboBox Name="ComboBox_Commit" DisplayMemberPath="Name" SelectedValuePath="Value" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="23" Width="420"/>
     </Grid>
 </Window>

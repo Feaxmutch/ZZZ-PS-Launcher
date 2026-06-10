@@ -8,9 +8,15 @@ namespace ZZZ_PS_Launcher
     /// </summary>
     public partial class App : Application
     {
+        private const string SelectedKeyName = "SelectedProfile";
+
         private static Profile _currentProfile;
+        private static List<CommitData> _commits = new();
+
+        public static IReadOnlyList<CommitData> Commits => _commits;
 
         public static string ProfilesPath => @"Software\ZZZ_PS_Launcher";
+        
 
         public App()
         {
@@ -20,6 +26,11 @@ namespace ZZZ_PS_Launcher
             {
                 Registry.CurrentUser.OpenSubKey("Software", true).CreateSubKey("ZZZ_PS_Launcher");
             }
+
+            _commits.Add(new CommitData("Рекомендованый для 3.0 BETA", "1aff97a"));
+            _commits.Add(new CommitData("Рекомендованый для 2.8 PROD", "eb9522c"));
+
+            _currentProfile = RestoreSelectedProfile();
         }
 
         public static void SetProfile(Profile profile)
@@ -30,6 +41,33 @@ namespace ZZZ_PS_Launcher
         public static Profile GetCurrentProfile()
         {
             return _currentProfile;
+        }
+
+        private static Profile RestoreSelectedProfile()
+        {
+            Profile[] profiles = GetAllProfiles();
+            string selectedname = string.Empty;
+
+            using (RegistryKey allProfilesKey = Registry.CurrentUser.OpenSubKey(ProfilesPath, true))
+            {
+                selectedname =(string)allProfilesKey.GetValue(SelectedKeyName, string.Empty);
+            }
+
+
+            if (profiles.Any(prof => prof.Name == selectedname))
+            {
+                return profiles.Where(prof => prof.Name == selectedname).First();
+            }
+
+            return new(string.Empty, default, string.Empty);
+        }
+
+        public static void SaveSelectedProfile()
+        {
+            using (RegistryKey allProfilesKey = Registry.CurrentUser.OpenSubKey(ProfilesPath, true))
+            {
+                allProfilesKey.SetValue(SelectedKeyName, _currentProfile.Name);
+            }
         }
 
         public static void SaveProfile(Profile profile)

@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:ZZZ_PS_Launcher.WindowV"
         mc:Ignorable="d"
         Closing="Window_Closing"
+        Activated="OnActivated"
+        WindowStartupLocation="CenterOwner"
         Title="Select Profile" Height="200" Width="300" ResizeMode="CanMinimize">
     <Grid>
         <Grid.RowDefinitions>
