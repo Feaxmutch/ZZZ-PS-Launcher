@@ -8,19 +8,15 @@
         Closing="Window_Closing"
         Activated="OnActivated"
         WindowStartupLocation="CenterOwner"
-        Title="Select Profile" Height="200" Width="300" ResizeMode="CanMinimize">
+        SizeToContent="WidthAndHeight"
+        Title="Select Profile" Height="50" Width="200" ResizeMode="NoResize">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="15"/>
-        </Grid.RowDefinitions>
-
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="15"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        
-        <ComboBox Name="ComboBox_Profiles" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" />
-        <Button Name="Button_Add" Content="Добавить" Click="OnAddClick" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="33" Width="121" FontSize="16" />
+
+        <ComboBox Name="ComboBox_Profiles" VerticalAlignment="Top" Height="22" />
+        <Button Name="Button_Add" Content="+" Click="OnAddClick" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="29" FontSize="16" Grid.Column="1" Height="22"  />
     </Grid>
 </Window>
