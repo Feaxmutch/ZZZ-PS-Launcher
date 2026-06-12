@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:ZZZ_PS_Launcher"
         mc:Ignorable="d"
         Title="Create Profile" Height="400" Width="584"
+        ResizeMode="CanMinimize"
         Background="LightGray">
     <Grid>
         <Grid.RowDefinitions>
@@ -28,7 +29,7 @@
         <Label Grid.Row="3" Content="Путь к папке сервера:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
         <Label Grid.Row="4" Content="Путь к Hoyo-sdk:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
         <Label Grid.Row="5" Content="Путь к Kcpshim:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
-        <Label Grid.Row="6" Content="Путь к Yidhari (патчеру клиента):" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
+        <Label Grid.Row="6" Content="Путь к патчеру клиента (Tentacle или Vortex):" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
         <Button Content="Указать путь" Click="ServerButton_Click" Background="WhiteSmoke" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="110" Height="23" Margin="0,0,30,0"/>
         <Button Content="Указать путь" Click="HoyoButton_Click" Background="WhiteSmoke" Grid.Row="4" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="110" Height="23" Margin="0,0,30,0"/>
         <Button Content="Указать путь" Click="KcpshimButton_Click" Background="WhiteSmoke" Grid.Row="5" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="110" Height="23" Margin="0,0,30,0"/>
