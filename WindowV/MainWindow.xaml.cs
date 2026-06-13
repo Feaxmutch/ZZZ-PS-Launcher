@@ -2,7 +2,6 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
-using ZZZ_PS_Launcher;
 
 namespace ZZZ_PS_Launcher
 {

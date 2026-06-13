@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using ZZZ_PS_Launcher;
 using ZZZ_PS_Launcher.WindowV;
 
 namespace ZZZ_PS_Launcher
