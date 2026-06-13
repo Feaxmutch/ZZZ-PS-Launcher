@@ -13,6 +13,7 @@ namespace ZZZ_PS_Launcher
             _windowV = window;
             _windowV.ClickedSelect += OnSelectClick;
             _windowV.ClickedSave += OnSaveClick;
+            _windowV.ClickedFromProfile += OnProfileClick;
         }
 
         private bool FieldsIsValide()
@@ -92,6 +93,19 @@ namespace ZZZ_PS_Launcher
             else
             {
                 SelectExeFile(app);
+            }
+        }
+
+        private void OnProfileClick(ProfileSettingName app)
+        {
+            ProfileDialogWindow dialog = new();
+            dialog.Owner = (_windowV as CreateProfileWindow);
+            Profile[] profiles = App.GetAllProfiles();
+
+            if (dialog.ShowDialog() == true)
+            {
+                Profile selectedProfile = profiles.Where(prof => prof.Name == dialog.SelectedResult).First();
+                _windowV.SetTextBox(app, selectedProfile.Patches);
             }
         }
 

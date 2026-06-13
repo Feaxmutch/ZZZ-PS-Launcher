@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace ZZZ_PS_Launcher
 {
@@ -10,9 +11,8 @@ namespace ZZZ_PS_Launcher
         private Patches _patches;
 
         public event Action<ProfileSettingName> ClickedSelect;
+        public event Action<ProfileSettingName> ClickedFromProfile;
         public event Action ClickedSave;
-        public event Action Showing;
-        public event Action Hiding;
 
         public IPatches Patches => _patches;
 
@@ -70,6 +70,25 @@ namespace ZZZ_PS_Launcher
             }
         }
 
+        public void SetTextBox(ProfileSettingName name, Patches patches)
+        {
+            switch (name)
+            {
+                case ProfileSettingName.Server:
+                    TextBox_Server.Text = patches.ServerPatch;
+                    break;
+                case ProfileSettingName.Hoyo:
+                    TextBox_Hoyo.Text = patches.HoyoPatch;
+                    break;
+                case ProfileSettingName.Kcpshim:
+                    TextBox_Kcpshim.Text = patches.KcpshimPatch;
+                    break;
+                case ProfileSettingName.Client:
+                    TextBox_Client.Text = patches.ClientPatch;
+                    break;
+            }
+        }
+
         public string GetTextBox(ProfileSettingName name)
         {
             switch (name)
@@ -91,39 +110,53 @@ namespace ZZZ_PS_Launcher
             return string.Empty;
         }
 
-        private void ServerButton_Click(object sender, EventArgs e)
+        private void Select_Click(object sender, EventArgs e)
         {
-            ClickedSelect?.Invoke(ProfileSettingName.Server);
+            Button button = sender as Button;
+
+            if (button.Name == Button_ServerSelect.Name)
+            {
+                ClickedSelect?.Invoke(ProfileSettingName.Server);
+            }
+            else if (button.Name == Button_HoyoSelect.Name)
+            {
+                ClickedSelect?.Invoke(ProfileSettingName.Hoyo);
+            }
+            else if (button.Name == Button_KcpshimSelect.Name)
+            {
+                ClickedSelect?.Invoke(ProfileSettingName.Kcpshim);
+            }
+            else if (button.Name == Button_ClientSelect.Name)
+            {
+                ClickedSelect?.Invoke(ProfileSettingName.Client);
+            }
         }
 
-        private void HoyoButton_Click(object sender, EventArgs e)
+        private void FromProfile_Click(object sender, EventArgs e)
         {
-            ClickedSelect?.Invoke(ProfileSettingName.Hoyo);
-        }
+            Button button = sender as Button;
 
-        private void KcpshimButton_Click(object sender, EventArgs e)
-        {
-            ClickedSelect?.Invoke(ProfileSettingName.Kcpshim);
-        }
-
-        private void ClientButton_Click(object sender, EventArgs e)
-        {
-            ClickedSelect?.Invoke(ProfileSettingName.Client);
+            if (button.Name == Button_ServerProfile.Name)
+            {
+                ClickedFromProfile ?.Invoke(ProfileSettingName.Server);
+            }
+            else if (button.Name == Button_HoyoProfile.Name)
+            {
+                ClickedFromProfile?.Invoke(ProfileSettingName.Hoyo);
+            }
+            else if (button.Name == Button_KcpshimProfile.Name)
+            {
+                ClickedFromProfile?.Invoke(ProfileSettingName.Kcpshim);
+            }
+            else if (button.Name == Button_ClientProfile.Name)
+            {
+                ClickedFromProfile?.Invoke(ProfileSettingName.Client);
+            }
         }
 
         private void SaveSettingsButton_Click(object sender, EventArgs e)
         {
             ClickedSave?.Invoke();
-        }
-
-        private void SettingsForm_FormClosing(object sender, EventArgs e)
-        {
-            Hiding?.Invoke();
-        }
-
-        private void SettingsForm_Load(object sender, EventArgs e)
-        {
-            Showing?.Invoke();
         }
     }
 }

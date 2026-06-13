@@ -9,32 +9,43 @@
         ResizeMode="CanMinimize"
         Background="LightGray">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition Height="60"/>
-        </Grid.RowDefinitions>
-        <TextBox Name="TextBox_Name" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="23" Width="420"/>
-        <TextBox Name="TextBox_Server" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="23" Width="420"/>
-        <TextBox Name="TextBox_Hoyo" Grid.Row="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="23" Width="420"/>
-        <TextBox Name="TextBox_Kcpshim" Grid.Row="5" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="23" Width="420"/>
-        <TextBox Name="TextBox_Client" Grid.Row="6" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="23" Width="420"/>
-        <Label Grid.Row="1" Content="Имя профиля:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
-        <Label Grid.Row="2" Content="Коммит сервера:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
-        <Label Grid.Row="3" Content="Путь к папке сервера:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
-        <Label Grid.Row="4" Content="Путь к Hoyo-sdk:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
-        <Label Grid.Row="5" Content="Путь к Kcpshim:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
-        <Label Grid.Row="6" Content="Путь к патчеру клиента (Tentacle или Vortex):" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
-        <Button Content="Указать путь" Click="ServerButton_Click" Background="WhiteSmoke" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="110" Height="23" Margin="0,0,30,0"/>
-        <Button Content="Указать путь" Click="HoyoButton_Click" Background="WhiteSmoke" Grid.Row="4" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="110" Height="23" Margin="0,0,30,0"/>
-        <Button Content="Указать путь" Click="KcpshimButton_Click" Background="WhiteSmoke" Grid.Row="5" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="110" Height="23" Margin="0,0,30,0"/>
-        <Button Content="Указать путь" Click="ClientButton_Click" Background="WhiteSmoke" Grid.Row="6" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="110" Height="23" Margin="0,0,30,0"/>
-        <Button Content="Сохранить" Click="SaveSettingsButton_Click" Background="WhiteSmoke" Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" Height="40"/>
-        <ComboBox Name="ComboBox_Commit" DisplayMemberPath="Name" SelectedValuePath="Value" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="23" Width="420"/>
+        <Button Content="Сохранить" Click="SaveSettingsButton_Click" Background="WhiteSmoke" Grid.Row="7" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="100" Height="40" Margin="0,0,0,10"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="11*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Name="TextBox_Name" Grid.Row="1" VerticalAlignment="Bottom" Height="23"/>
+            <TextBox Name="TextBox_Server" Grid.Row="3" VerticalAlignment="Bottom"  Height="23" />
+            <TextBox Name="TextBox_Hoyo" Grid.Row="4" VerticalAlignment="Bottom"  Height="23" />
+            <TextBox Name="TextBox_Kcpshim" Grid.Row="5" VerticalAlignment="Bottom"  Height="23" />
+            <TextBox Name="TextBox_Client" Grid.Row="6" VerticalAlignment="Bottom"  Height="23" />
+            <ComboBox Name="ComboBox_Commit" DisplayMemberPath="Name" SelectedValuePath="Value" Grid.Row="2" VerticalAlignment="Bottom"  Height="23" />
+            <Label Grid.Row="1" Content="Имя профиля:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
+            <Label Grid.Row="2" Content="Коммит сервера:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
+            <Label Grid.Row="3" Content="Путь к папке сервера:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
+            <Label Grid.Row="4" Content="Путь к Hoyo-sdk:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
+            <Label Grid.Row="5" Content="Путь к Kcpshim:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
+            <Label Grid.Row="6" Content="Путь к патчеру клиента (Tentacle или Vortex):" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
+            <Button Name="Button_ServerSelect" Content="Указать путь" Click="Select_Click" Background="WhiteSmoke" Grid.Row="3" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="110" Height="23" Margin="5,0,0,0" />
+            <Button Name="Button_HoyoSelect" Content="Указать путь" Click="Select_Click" Background="WhiteSmoke" Grid.Row="4" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="110" Height="23" Margin="5,0,0,0"/>
+            <Button Name="Button_KcpshimSelect" Content="Указать путь" Click="Select_Click" Background="WhiteSmoke" Grid.Row="5" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="110" Height="23" Margin="5,0,0,0"/>
+            <Button Name="Button_ClientSelect" Content="Указать путь" Click="Select_Click" Background="WhiteSmoke" Grid.Row="6" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="110" Height="23" Margin="5,0,0,0"/>
+            <Button Name="Button_ServerProfile" Content="Из профиля" Click="FromProfile_Click" Background="WhiteSmoke" Grid.Row="3" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="110" Height="23" Margin="0,0,5,0" />
+            <Button Name="Button_HoyoProfile" Content="Из профиля" Click="FromProfile_Click" Background="WhiteSmoke" Grid.Row="4" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="110" Height="23" Margin="0,0,5,0"/>
+            <Button Name="Button_KcpshimProfile" Content="Из профиля" Click="FromProfile_Click" Background="WhiteSmoke" Grid.Row="5" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="110" Height="23" Margin="0,0,5,0"/>
+            <Button Name="Button_ClientProfile" Content="Из профиля" Click="FromProfile_Click" Background="WhiteSmoke" Grid.Row="6" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="110" Height="23" Margin="0,0,5,0"/>
+        </Grid>
     </Grid>
 </Window>

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace ZZZ_PS_Launcher.WindowV
+namespace ZZZ_PS_Launcher
 {
     /// <summary>
     /// Логика взаимодействия для ProfileSelector.xaml
