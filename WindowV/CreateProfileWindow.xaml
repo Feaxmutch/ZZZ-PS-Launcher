@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZZZ_PS_Launcher"
         mc:Ignorable="d"
-        Title="Create Profile" Height="400" Width="584"
+        Title="Создание профиля" Height="400" Width="700"
         ResizeMode="CanMinimize"
         Background="LightGray">
     <Grid>

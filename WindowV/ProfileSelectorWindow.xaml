@@ -1,15 +1,15 @@
-﻿<Window x:Class="ZZZ_PS_Launcher.WindowV.ProfileSelectorWindow"
+﻿<Window x:Class="ZZZ_PS_Launcher.ProfileSelectorWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ZZZ_PS_Launcher.WindowV"
+        xmlns:local="clr-namespace:ZZZ_PS_Launcher"
         mc:Ignorable="d"
         Closing="Window_Closing"
         Activated="OnActivated"
         WindowStartupLocation="CenterOwner"
         SizeToContent="WidthAndHeight"
-        Title="Select Profile" Height="50" Width="200" ResizeMode="NoResize">
+        Title="Выбор профиля" Height="50" Width="200" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
