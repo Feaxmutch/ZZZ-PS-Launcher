@@ -27,7 +27,8 @@ namespace ZZZ_PS_Launcher
                 Registry.CurrentUser.OpenSubKey("Software", true).CreateSubKey("ZZZ_PS_Launcher");
             }
 
-            _commits.Add(new CommitData("Рекомендованый для 3.0 BETA", "1aff97a"));
+            _commits.Add(new CommitData("Рекомендованый для 3.0.4 BETA", "1aff97a"));
+            _commits.Add(new CommitData("Рекомендованый для 3.1.0 BETA", "31049ce"));
             _commits.Add(new CommitData("Рекомендованый для 2.8 PROD", "eb9522c"));
 
             _currentProfile = RestoreSelectedProfile();
