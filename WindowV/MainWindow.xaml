@@ -9,10 +9,7 @@
         WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="450" Width="800" ResizeMode="CanMinimize">
     <Grid>
-        <Image Source="/content/MainBackground.png"
-               Stretch="UniformToFill" 
-               RenderOptions.BitmapScalingMode="HighQuality"
-               SnapsToDevicePixels="True"/>
+        <Image Source="/content/MainBackground.png" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" SnapsToDevicePixels="True"/>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="305*"/>
@@ -25,29 +22,12 @@
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition Width="10"/>
             </Grid.ColumnDefinitions>
-            <Button BorderThickness="0"
-                    Name="Button_Settings"
-                    Click="OpenSettings_Click"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center" 
-                    Width="50"
-                    Grid.Row="2"
-                    Margin="25,0,0,0" Height="50">
+            <Button BorderThickness="0" Name="Button_Settings" Click="OpenSettings_Click" HorizontalAlignment="Left" VerticalAlignment="Center"  Width="50" Grid.Row="2" Margin="25,0,0,0" Height="50">
                 <Button.Background>
                     <ImageBrush ImageSource="/content/settings_button.png"/>
                 </Button.Background>
             </Button>
-            <Button Name="Button_launch"
-                    Click="Launch_Click"
-                    MouseEnter="OnButtonEnter"
-                    MouseLeave="OnButtonLeave"
-                    Grid.Column="1" 
-                    Grid.Row="2"
-                    BorderThickness="0"
-                    FontWeight="UltraBold"
-                    Content="Начать игру"
-                    FontSize="16"
-                    Padding="30,0,0,0">
+            <Button Name="Button_launch"  Click="Launch_Click" MouseEnter="OnButtonEnter" MouseLeave="OnButtonLeave" Grid.Column="1"   Grid.Row="2" BorderThickness="0" FontWeight="UltraBold" Content="Начать игру" FontSize="18" Padding="30,0,0,0">
                 <Button.Background>
                     <ImageBrush ImageSource="/content/PlayButton.png"/>
                 </Button.Background>
