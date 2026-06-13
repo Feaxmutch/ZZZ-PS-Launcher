@@ -2,9 +2,9 @@
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using ZZZ_PS_Launcher.WindowI;
+using ZZZ_PS_Launcher;
 
-namespace ZZZ_PS_Launcher.WindowP
+namespace ZZZ_PS_Launcher
 {
     internal class CreateProfileWindowP
     {

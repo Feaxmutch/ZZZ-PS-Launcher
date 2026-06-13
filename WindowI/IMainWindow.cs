@@ -1,4 +1,4 @@
-﻿namespace ZZZ_PS_Launcher.WindowI
+﻿namespace ZZZ_PS_Launcher
 {
     internal interface IMainWindow
     {

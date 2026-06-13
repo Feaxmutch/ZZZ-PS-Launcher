@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using ZZZ_PS_Launcher.WindowP;
+using ZZZ_PS_Launcher;
 
 namespace ZZZ_PS_Launcher
 {
