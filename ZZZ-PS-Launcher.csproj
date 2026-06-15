@@ -8,6 +8,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
 	  <EnableDefaultNamespaceAllowList>false</EnableDefaultNamespaceAllowList>
+	  <ApplicationIcon>content\Icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="content\Icon.ico" />
+    <EmbeddedResource Include="content\Icon.ico" />
     <Resource Include="content\MainBackground.png" />
     <Resource Include="content\PlayButton.png" />
     <Resource Include="content\settings_button.png" />
@@ -26,6 +27,10 @@
 
   <ItemGroup>
     <ApplicationDefinition Include="WpfProjFiles\App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="content\Icon.ico" />
   </ItemGroup>
 
 </Project>
