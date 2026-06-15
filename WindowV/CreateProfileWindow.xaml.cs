@@ -26,7 +26,7 @@ namespace ZZZ_PS_Launcher
             List<CommitData> items = new();
             items.Add(new CommitData("Самый последний BETA", "master"));
             items.Add(new CommitData("Самый последний PROD", "prod"));
-            
+
             foreach (var commit in App.Commits)
             {
                 items.Add(commit);
@@ -138,7 +138,7 @@ namespace ZZZ_PS_Launcher
 
             if (button.Name == Button_ServerProfile.Name)
             {
-                ClickedFromProfile ?.Invoke(ProfileSettingName.Server);
+                ClickedFromProfile?.Invoke(ProfileSettingName.Server);
             }
             else if (button.Name == Button_HoyoProfile.Name)
             {

@@ -24,7 +24,7 @@ namespace ZZZ_PS_Launcher
             string kcpshimPath = _windowV.GetTextBox(ProfileSettingName.Kcpshim);
             string name = _windowV.GetTextBox(ProfileSettingName.Name);
             string commit = _windowV.GetTextBox(ProfileSettingName.ServerCommit);
-            Profile testProfile = new(name, new() {ClientPatch = clientPath, HoyoPatch = hoyoPath, KcpshimPatch = kcpshimPath, ServerPatch = serverPath }, commit);
+            Profile testProfile = new(name, new() { ClientPatch = clientPath, HoyoPatch = hoyoPath, KcpshimPatch = kcpshimPath, ServerPatch = serverPath }, commit);
 
             string messageStart = "Указан неверный путь к";
 
@@ -74,7 +74,7 @@ namespace ZZZ_PS_Launcher
         private void SelectFolder()
         {
             OpenFolderDialog folderDialog = new OpenFolderDialog();
-            
+
             folderDialog.Title = "Выберите папку с сервером";
             folderDialog.InitialDirectory = @"\\wsl.localhost";
 

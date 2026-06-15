@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ZZZ_PS_Launcher
 {
@@ -169,7 +168,7 @@ namespace ZZZ_PS_Launcher
 
         private void OnLaunchClient()
         {
-             Task.Run(StartLaunching);
+            Task.Run(StartLaunching);
         }
 
         private async Task StartLaunching()

@@ -58,7 +58,7 @@ namespace ZZZ_PS_Launcher
 
             using (RegistryKey allProfilesKey = Registry.CurrentUser.OpenSubKey(ProfilesPath, true))
             {
-                selectedname =(string)allProfilesKey.GetValue(SelectedKeyName, string.Empty);
+                selectedname = (string)allProfilesKey.GetValue(SelectedKeyName, string.Empty);
             }
 
 
@@ -70,7 +70,7 @@ namespace ZZZ_PS_Launcher
             return new(string.Empty, default, string.Empty);
         }
 
-        
+
         public static void SaveSelectedProfile()
         {
             using (RegistryKey allProfilesKey = Registry.CurrentUser.OpenSubKey(ProfilesPath, true))
