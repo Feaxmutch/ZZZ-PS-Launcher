@@ -33,4 +33,8 @@
     <Content Include="content\Icon.ico" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Proccess\" />
+  </ItemGroup>
+
 </Project>

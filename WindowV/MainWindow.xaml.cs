@@ -18,6 +18,21 @@ namespace ZZZ_PS_Launcher
         {
             InitializeComponent();
             InitializeElements();
+            SetProgressLabel(string.Empty);
+        }
+
+        public void SetProgressLabel(string content)
+        {
+            if (content == string.Empty)
+            {
+                Label_LaunchProgress.SetValue(OpacityProperty, 0.0);
+            }
+            else
+            {
+                Label_LaunchProgress.SetValue(OpacityProperty, 1.0);
+            }
+
+            Label_LaunchProgress.Content = content;
         }
 
         private void OnButtonEnter(object sender, MouseEventArgs e)
@@ -43,7 +58,7 @@ namespace ZZZ_PS_Launcher
             OpeningSettings?.Invoke();
         }
 
-        private void Launch_Click(object sender, RoutedEventArgs e)
+        private async void Launch_Click(object sender, RoutedEventArgs e)
         {
             Launching?.Invoke();
         }

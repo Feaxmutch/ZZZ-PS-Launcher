@@ -10,6 +10,7 @@
         Title="ZZZ-PS-Starter" Height="450" Width="800" ResizeMode="CanMinimize">
     <Grid>
         <Image Source="/content/MainBackground.png" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" SnapsToDevicePixels="True"/>
+        <Label Name="Label_LaunchProgress" Content="Здесь прогресс запуска" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="White" Background="Black" />
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="305*"/>

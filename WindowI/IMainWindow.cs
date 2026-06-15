@@ -5,5 +5,7 @@
         event Action OpeningSettings;
         event Action Launching;
         event Action WindowClosed;
+
+        void SetProgressLabel(string content);
     }
 }

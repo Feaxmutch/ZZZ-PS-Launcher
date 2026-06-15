@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ZZZ_PS_Launcher
 {
@@ -26,144 +27,100 @@ namespace ZZZ_PS_Launcher
             _mainFormV.WindowClosed += OnClosed;
         }
 
-        private string GetCommitOnServer()
+        private async Task<ProcessData> StartProcess(string fileName, string directory, string arguments, bool canOutput = false)
         {
-            string serverPath = App.GetCurrentProfile().Patches.ServerPatch;
-
-            ProcessStartInfo checkCommitInfo = new ProcessStartInfo()
+            ProcessStartInfo psi = new ProcessStartInfo()
             {
-                FileName = "wsl.exe",
-                WorkingDirectory = serverPath,
-                Arguments = $"--cd \"{serverPath}\"-- bash -c \"{_linuxGitRev}\"",
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
+                FileName = fileName,
+                WorkingDirectory = directory,
+                Arguments = arguments,
+                UseShellExecute = !canOutput,
+                RedirectStandardOutput = canOutput,
                 WindowStyle = ProcessWindowStyle.Minimized,
                 Verb = "runas"
             };
+            Process process = null;
 
-            Process process = Process.Start(checkCommitInfo);
-            if (process == null) return string.Empty;
-            string output = process.StandardOutput.ReadToEnd();
-            process.WaitForExit();
-            return output.TrimEnd();
+            try
+            {
+                process = Process.Start(psi);
+
+                if (process != null && canOutput)
+                {
+                    string output = process.StandardOutput.ReadToEnd();
+                    process.WaitForExit();
+                    return new ProcessData(process, output);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка запуска процесса: {ex.Message}");
+            }
+
+            return new ProcessData(process, string.Empty);
         }
 
-        private void SetCommitOnServer(string newCommit)
+        private async Task<string> GetCommitOnServer()
         {
             string serverPath = App.GetCurrentProfile().Patches.ServerPatch;
-
-            ProcessStartInfo checkCommitInfo = new ProcessStartInfo()
-            {
-                FileName = "wsl.exe",
-                WorkingDirectory = serverPath,
-                Arguments = $"--cd \"{serverPath}\"-- bash -c \"{_linuxGitReset} && {_linuxGitCheckout} {newCommit}\"",
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                WindowStyle = ProcessWindowStyle.Minimized,
-                Verb = "runas"
-            };
-
-            Process process = Process.Start(checkCommitInfo);
-            if (process == null) return;
-            process.WaitForExit();
+            ProcessData result = await StartProcess("wsl.exe", serverPath, $"--cd \"{serverPath}\"-- bash -c \"{_linuxGitRev}\"", true);
+            return result.Output.TrimEnd();
         }
 
-        private void PullRepository()
+        private async Task SetCommitOnServer(string newCommit)
         {
             string serverPath = App.GetCurrentProfile().Patches.ServerPatch;
-
-            ProcessStartInfo checkCommitInfo = new ProcessStartInfo()
-            {
-                FileName = "wsl.exe",
-                WorkingDirectory = serverPath,
-                Arguments = $"--cd \"{serverPath}\"-- bash -c \"{_linuxGitReset} && {_linuxGitPull}\"",
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                WindowStyle = ProcessWindowStyle.Minimized,
-                Verb = "runas"
-            };
-
-            Process process = Process.Start(checkCommitInfo);
-            if (process == null) return;
-            process.WaitForExit();
+            await StartProcess("wsl.exe", serverPath, $"--cd \"{serverPath}\"-- bash -c \"{_linuxGitReset} && {_linuxGitCheckout} {newCommit}\"", false);
         }
 
-        private void RunServer(string folderPath)
+        private async Task PullRepository()
+        {
+            string serverPath = App.GetCurrentProfile().Patches.ServerPatch;
+            await StartProcess("wsl.exe", serverPath, $"--cd \"{serverPath}\"-- bash -c \"{_linuxGitReset} && {_linuxGitPull}\"", false);
+        }
+
+        private async Task RunServer(string folderPath)
         {
             if (string.IsNullOrWhiteSpace(folderPath)) return;
-
-            string commitOnServer = GetCommitOnServer();
+            Application.Current.Dispatcher.Invoke(() => _mainFormV.SetProgressLabel("Проверка текущего коммита"));
+            string commitOnServer = await GetCommitOnServer();
             string commitOnProfile = App.GetCurrentProfile().ServerCommit;
-
-            if (commitOnProfile != commitOnServer)
-            {
-                SetCommitOnServer(commitOnProfile);
-            }
 
             if (commitOnProfile == "master" || commitOnProfile == "prod")
             {
-                PullRepository();
+                Application.Current.Dispatcher.Invoke(() => _mainFormV.SetProgressLabel("Вытягивание актуального репозитория"));
+                await PullRepository();
             }
 
-            ProcessStartInfo startServerInfo = new ProcessStartInfo()
+            if (commitOnProfile != commitOnServer)
             {
-                FileName = "wsl.exe",
-                WorkingDirectory = folderPath,
-                Arguments = $"--cd \"{folderPath}\"-- bash -i -c \"{_linuxZigUsing} & {_linuxCommand}\"",
-                UseShellExecute = true,
-                WindowStyle = ProcessWindowStyle.Minimized,
-                Verb = "runas"
-            };
+                Application.Current.Dispatcher.Invoke(() => _mainFormV.SetProgressLabel("Смена комита"));
+                await SetCommitOnServer(commitOnProfile);
+            }
 
-            try
-            {
-                ResetProcessField(ref _serverProcess);
-                _serverProcess = Process.Start(startServerInfo);
-                ResetProcessField(ref _serverProcess);
-            }
-            catch (System.ComponentModel.Win32Exception ex)
-            {
-                MessageBox.Show($"Ошибка wsl: {ex.Message}");
-            }
+            Application.Current.Dispatcher.Invoke(() => _mainFormV.SetProgressLabel("Запуск сервера"));
+            ResetProcessField(ref _serverProcess);
+            ProcessData result = await StartProcess("wsl.exe", folderPath, $"--cd \"{folderPath}\"-- bash -i -c \"{_linuxZigUsing} & {_linuxCommand}\"", false);
+            _serverProcess = result.Process;
+            ResetProcessField(ref _serverProcess);
         }
 
-        private void RunWinExe(ProfileSettingName app, string fullPath)
+        private async Task RunWinExe(ProfileSettingName app, string fullPath)
         {
             if (string.IsNullOrWhiteSpace(fullPath)) return;
+            Application.Current.Dispatcher.Invoke(() => _mainFormV.SetProgressLabel($"Запуск {Path.GetFileName(fullPath)}"));
+            ProcessData result = await StartProcess(fullPath, Path.GetDirectoryName(fullPath), "", false);
 
-            ProcessStartInfo psi = new ProcessStartInfo()
+            switch (app)
             {
-                FileName = fullPath,
-                WorkingDirectory = Path.GetDirectoryName(fullPath),
-                UseShellExecute = true,
-                WindowStyle = ProcessWindowStyle.Minimized,
-                Verb = "runas"
-            };
-
-            try
-            {
-                Process process = Process.Start(psi);
-
-                switch (app)
-                {
-                    case ProfileSettingName.Hoyo:
-                        ResetProcessField(ref _hoyoProcess);
-                        _hoyoProcess = process;
-                        break;
-                    case ProfileSettingName.Kcpshim:
-                        ResetProcessField(ref _kcpshimProcess);
-                        _kcpshimProcess = process;
-                        break;
-                }
-            }
-            catch (System.ComponentModel.Win32Exception ex)
-            {
-                if (ex.NativeErrorCode != 1223)
-                {
-                    MessageBox.Show($"Ошибка системы при запуске {Path.GetFileName(fullPath)}: {ex.Message}");
-                }
+                case ProfileSettingName.Hoyo:
+                    ResetProcessField(ref _hoyoProcess);
+                    _hoyoProcess = result.Process;
+                    break;
+                case ProfileSettingName.Kcpshim:
+                    ResetProcessField(ref _kcpshimProcess);
+                    _kcpshimProcess = result.Process;
+                    break;
             }
         }
 
@@ -212,6 +169,11 @@ namespace ZZZ_PS_Launcher
 
         private void OnLaunchClient()
         {
+             Task.Run(StartLaunching);
+        }
+
+        private async Task StartLaunching()
+        {
             Profile profile = App.GetCurrentProfile();
 
             if (profile.Name == string.Empty)
@@ -231,10 +193,11 @@ namespace ZZZ_PS_Launcher
             }
 
             KillAll();
-            RunServer(profile.Patches.ServerPatch);
-            RunWinExe(ProfileSettingName.Hoyo, profile.Patches.HoyoPatch);
-            RunWinExe(ProfileSettingName.Kcpshim, profile.Patches.KcpshimPatch);
-            RunWinExe(ProfileSettingName.Client, profile.Patches.ClientPatch);
+            await RunServer(profile.Patches.ServerPatch);
+            await RunWinExe(ProfileSettingName.Hoyo, profile.Patches.HoyoPatch);
+            await RunWinExe(ProfileSettingName.Kcpshim, profile.Patches.KcpshimPatch);
+            await RunWinExe(ProfileSettingName.Client, profile.Patches.ClientPatch);
+            Application.Current.Dispatcher.Invoke(() => _mainFormV.SetProgressLabel(string.Empty));
         }
 
         private void OnClosed()
