@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using ZZZ_PS_Launcher;
 
 namespace ZZZ_PS_Launcher
 {
@@ -219,6 +218,16 @@ namespace ZZZ_PS_Launcher
             {
                 MessageBox.Show("Профиль не выбран. Пожалуйста выберите профиль");
                 return;
+            }
+
+            CheckVersionResult checkResult = App.CompatibilityAnalyzer.IsCommitVersionCorrect(App.GetCurrentProfile());
+
+            if (checkResult != CheckVersionResult.Correct)
+            {
+                if (App.CompatibilityAnalyzer.AskForContinue(checkResult) == false)
+                {
+                    return;
+                }
             }
 
             KillAll();

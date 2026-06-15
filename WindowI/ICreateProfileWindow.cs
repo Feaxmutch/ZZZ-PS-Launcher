@@ -1,6 +1,6 @@
 ﻿namespace ZZZ_PS_Launcher
 {
-    internal interface ICreateProfileWindow
+    public interface ICreateProfileWindow
     {
         event Action<ProfileSettingName> ClickedSelect;
         event Action<ProfileSettingName> ClickedFromProfile;

@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace ZZZ_PS_Launcher
 {
-    internal class CreateProfileWindowP
+    public class CreateProfileWindowP
     {
         private ICreateProfileWindow _windowV;
 
@@ -23,6 +23,9 @@ namespace ZZZ_PS_Launcher
             string hoyoPath = _windowV.GetTextBox(ProfileSettingName.Hoyo);
             string kcpshimPath = _windowV.GetTextBox(ProfileSettingName.Kcpshim);
             string name = _windowV.GetTextBox(ProfileSettingName.Name);
+            string commit = _windowV.GetTextBox(ProfileSettingName.ServerCommit);
+            Profile testProfile = new(name, new() {ClientPatch = clientPath, HoyoPatch = hoyoPath, KcpshimPatch = kcpshimPath, ServerPatch = serverPath }, commit);
+
             string messageStart = "Указан неверный путь к";
 
             if ((Directory.Exists(serverPath + "\\dpsv") && Directory.Exists(serverPath + "\\gamesv")) == false)
@@ -53,6 +56,16 @@ namespace ZZZ_PS_Launcher
             {
                 MessageBox.Show($"Имя не может быть пустым");
                 return false;
+            }
+
+            CheckVersionResult checkResult = App.CompatibilityAnalyzer.IsCommitVersionCorrect(testProfile);
+
+            if (checkResult != CheckVersionResult.Correct)
+            {
+                if (App.CompatibilityAnalyzer.AskForContinue(checkResult) == false)
+                {
+                    return false;
+                }
             }
 
             return true;

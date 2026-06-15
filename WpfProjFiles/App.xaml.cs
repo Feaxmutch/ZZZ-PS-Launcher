@@ -16,7 +16,8 @@ namespace ZZZ_PS_Launcher
         public static IReadOnlyList<CommitData> Commits => _commits;
 
         public static string ProfilesPath => @"Software\ZZZ_PS_Launcher";
-        
+
+        public static CompatibilityAnalyzer CompatibilityAnalyzer { get; private set; }
 
         public App()
         {
@@ -30,7 +31,12 @@ namespace ZZZ_PS_Launcher
             _commits.Add(new CommitData("Рекомендованый для 3.0.4 BETA", "1aff97a"));
             _commits.Add(new CommitData("Рекомендованый для 3.1.0 BETA", "31049ce"));
             _commits.Add(new CommitData("Рекомендованый для 2.8 PROD", "eb9522c"));
-
+            Dictionary<string, string> compatibilityList = new();
+            compatibilityList.Add("CNBetaWin3.1.1", "master");
+            compatibilityList.Add("CNBetaWin3.1.0", "31049ce");
+            compatibilityList.Add("CNBetaWin3.0.4", "1aff97a");
+            compatibilityList.Add("OSPRODWin2.8.0", "eb9522c");
+            CompatibilityAnalyzer = new(compatibilityList);
             _currentProfile = RestoreSelectedProfile();
         }
 
@@ -63,6 +69,7 @@ namespace ZZZ_PS_Launcher
             return new(string.Empty, default, string.Empty);
         }
 
+        
         public static void SaveSelectedProfile()
         {
             using (RegistryKey allProfilesKey = Registry.CurrentUser.OpenSubKey(ProfilesPath, true))
