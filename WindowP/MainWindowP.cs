@@ -181,11 +181,11 @@ namespace ZZZ_PS_Launcher
                 return;
             }
 
-            CheckVersionResult checkResult = App.CompatibilityAnalyzer.IsCommitVersionCorrect(App.GetCurrentProfile());
+            CheckVersionResult checkResult = App.YoshunkoCompatibility.IsCommitVersionCorrect(App.GetCurrentProfile());
 
             if (checkResult != CheckVersionResult.Correct)
             {
-                if (App.CompatibilityAnalyzer.AskForContinue(checkResult) == false)
+                if (App.YoshunkoCompatibility.AskForContinue(checkResult) == false)
                 {
                     return;
                 }

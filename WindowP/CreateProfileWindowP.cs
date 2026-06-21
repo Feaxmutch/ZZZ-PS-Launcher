@@ -18,12 +18,12 @@ namespace ZZZ_PS_Launcher
 
         private bool FieldsIsValide()
         {
-            string serverPath = _windowV.GetTextBox(ProfileSettingName.Server);
-            string clientPath = _windowV.GetTextBox(ProfileSettingName.Client);
-            string hoyoPath = _windowV.GetTextBox(ProfileSettingName.Hoyo);
-            string kcpshimPath = _windowV.GetTextBox(ProfileSettingName.Kcpshim);
-            string name = _windowV.GetTextBox(ProfileSettingName.Name);
-            string commit = _windowV.GetTextBox(ProfileSettingName.ServerCommit);
+            string serverPath = _windowV.GetSetting(ProfileSettingName.Server);
+            string clientPath = _windowV.GetSetting(ProfileSettingName.Client);
+            string hoyoPath = _windowV.GetSetting(ProfileSettingName.Hoyo);
+            string kcpshimPath = _windowV.GetSetting(ProfileSettingName.Kcpshim);
+            string name = _windowV.GetSetting(ProfileSettingName.Name);
+            string commit = _windowV.GetSetting(ProfileSettingName.ServerCommit);
             Profile testProfile = new(name, new() { ClientPatch = clientPath, HoyoPatch = hoyoPath, KcpshimPatch = kcpshimPath, ServerPatch = serverPath }, commit);
 
             string messageStart = "Указан неверный путь к";
@@ -58,11 +58,11 @@ namespace ZZZ_PS_Launcher
                 return false;
             }
 
-            CheckVersionResult checkResult = App.CompatibilityAnalyzer.IsCommitVersionCorrect(testProfile);
+            CheckVersionResult checkResult = App.YoshunkoCompatibility.IsCommitVersionCorrect(testProfile);
 
             if (checkResult != CheckVersionResult.Correct)
             {
-                if (App.CompatibilityAnalyzer.AskForContinue(checkResult) == false)
+                if (App.YoshunkoCompatibility.AskForContinue(checkResult) == false)
                 {
                     return false;
                 }
@@ -126,7 +126,7 @@ namespace ZZZ_PS_Launcher
         {
             if (FieldsIsValide())
             {
-                _windowV.ApplyFromTextBoxes();
+                _windowV.ApplyFromView();
                 _windowV.Close();
             }
         }

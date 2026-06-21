@@ -7,16 +7,16 @@ namespace ZZZ_PS_Launcher
     {
         private const string ClientVersionFile = "version_info";
 
-        private Dictionary<string, string> _compatibilityList = new();
+        private List<CommitData> _compatibilityList = new();
 
-        public CompatibilityAnalyzer(Dictionary<string, string> compatibilityList)
+        public CompatibilityAnalyzer(List<CommitData> compatibilityList)
         {
             _compatibilityList = compatibilityList;
         }
 
         public CheckVersionResult IsCommitVersionCorrect(Profile profile)
         {
-            string clientDirectory = Path.GetDirectoryName(profile.Patches.ClientPatch);
+            string clientDirectory = Path.GetDirectoryName(profile.Patches.ClientPatch) ?? string.Empty;
             string versionPath = Path.Combine(clientDirectory, ClientVersionFile);
 
             if (File.Exists(versionPath) == false)
@@ -26,12 +26,12 @@ namespace ZZZ_PS_Launcher
 
             string info = File.ReadAllLines(versionPath).First();
 
-            if (_compatibilityList.ContainsKey(info) == false)
+            if (_compatibilityList.Any(commit => commit.ClientVersion == info) == false)
             {
                 return CheckVersionResult.Unknown;
             }
 
-            if (_compatibilityList[info].Contains(profile.ServerCommit) == false)
+            if (_compatibilityList.Any(commit => commit.Value == profile.ServerCommit) == false)
             {
                 return CheckVersionResult.Uncorrect;
             }

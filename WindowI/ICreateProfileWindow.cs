@@ -10,8 +10,8 @@
 
         void SetTextBox(ProfileSettingName name, string value);
         void SetTextBox(ProfileSettingName name, Patches patches);
-        string GetTextBox(ProfileSettingName name);
-        void ApplyFromTextBoxes();
+        string GetSetting(ProfileSettingName name);
+        void ApplyFromView();
         void Close();
     }
 }
