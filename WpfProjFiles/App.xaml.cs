@@ -28,15 +28,17 @@ namespace ZZZ_PS_Launcher
                 Registry.CurrentUser.OpenSubKey("Software", true).CreateSubKey("ZZZ_PS_Launcher");
             }
 
-            _commits.Add(new CommitData("Рекомендованый для 3.0.4 BETA", "1aff97a"));
+            _commits.Add(new CommitData("Рекомендованый для 3.1.1 BETA", "009742d"));
             _commits.Add(new CommitData("Рекомендованый для 3.1.0 BETA", "31049ce"));
+            _commits.Add(new CommitData("Рекомендованый для 3.0.4 BETA", "1aff97a"));
             _commits.Add(new CommitData("Рекомендованый для 2.8 PROD", "4ce69a6"));
             Dictionary<string, string> compatibilityList = new();
-            compatibilityList.Add("CNBetaWin3.1.1", "master");
+            compatibilityList.Add("CNBetaWin3.1.2", "master");
+            compatibilityList.Add("OSPRODWin3.0.0", "prod");
+            compatibilityList.Add("CNBetaWin3.1.1", "009742d");
             compatibilityList.Add("CNBetaWin3.1.0", "31049ce");
             compatibilityList.Add("CNBetaWin3.0.4", "1aff97a");
             compatibilityList.Add("OSPRODWin2.8.0", "4ce69a6");
-            compatibilityList.Add("OSPRODWin3.0.0", "prod");
             CompatibilityAnalyzer = new(compatibilityList);
             _currentProfile = RestoreSelectedProfile();
         }
