@@ -69,13 +69,13 @@ namespace ZZZ_PS_Launcher
         private async Task SetCommitOnServer(string newCommit)
         {
             string serverPath = App.GetCurrentProfile().Patches.ServerPatch;
-            await StartProcess("wsl.exe", serverPath, $"--cd \"{serverPath}\"-- bash -c \"{_linuxGitReset} && {_linuxGitCheckout} {newCommit}\"", false);
+            await StartProcess("wsl.exe", serverPath, $"--cd \"{serverPath}\"-- bash -c \"{_linuxGitReset} && {_linuxGitCheckout} {newCommit}\"", true);
         }
 
         private async Task PullRepository()
         {
             string serverPath = App.GetCurrentProfile().Patches.ServerPatch;
-            await StartProcess("wsl.exe", serverPath, $"--cd \"{serverPath}\"-- bash -c \"{_linuxGitReset} && {_linuxGitPull}\"", false);
+            await StartProcess("wsl.exe", serverPath, $"--cd \"{serverPath}\"-- bash -c \"{_linuxGitReset} && {_linuxGitPull}\"", true);
         }
 
         private async Task RunServer(string folderPath)
