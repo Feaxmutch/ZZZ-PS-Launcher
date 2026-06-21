@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace ZZZ_PS_Launcher
 {
@@ -7,7 +8,7 @@ namespace ZZZ_PS_Launcher
     /// </summary>
     public partial class ProfileSelectorWindow : Window
     {
-        CreateProfileWindow _window;
+        CreateProfileWindow? _window;
 
         public bool IsDisposed { get; private set; }
 
@@ -48,6 +49,13 @@ namespace ZZZ_PS_Launcher
             _window.Show();
         }
 
+        private void OnRemoveClick(object sender, RoutedEventArgs e)
+        {
+            Profile[] profiles = App.GetAllProfiles();
+            App.RemoveProfile(profiles.Where(profile => profile.Name == (string)ComboBox_Profiles.SelectedItem).First());
+            UpdateComboBox();
+        }
+
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (ComboBox_Profiles.Items.Count == 0)
@@ -57,10 +65,10 @@ namespace ZZZ_PS_Launcher
 
             if (ComboBox_Profiles.SelectedIndex >= 0)
             {
-                string selectedProfile = (string)ComboBox_Profiles.Items[ComboBox_Profiles.SelectedIndex];
+                string selectedName = (string)ComboBox_Profiles.SelectedItem;
                 Profile[] profiles = App.GetAllProfiles();
-                Profile profile = profiles.Where(prof => prof.Name == selectedProfile).First();
-                App.SetProfile(profile);
+                Profile profile = profiles.Where(prof => prof.Name == selectedName).First();
+                App.SetCurrentProfile(profile);
             }
         }
 

@@ -11,41 +11,36 @@ namespace ZZZ_PS_Launcher
         private const string SelectedKeyName = "SelectedProfile";
 
         private static Profile _currentProfile;
-        private static List<CommitData> _commits = new();
+        private static List<CommitData> _yoshunkoCommits = new();
 
-        public static IReadOnlyList<CommitData> Commits => _commits;
+        public static IReadOnlyList<CommitData> YoshunkoCommits => _yoshunkoCommits;
 
         public static string ProfilesPath => @"Software\ZZZ_PS_Launcher";
 
-        public static CompatibilityAnalyzer CompatibilityAnalyzer { get; private set; }
+        public static CompatibilityAnalyzer YoshunkoCompatibility { get; private set; }
 
         public App()
         {
-            _currentProfile = new(string.Empty, default, string.Empty);
+            _currentProfile = new();
 
             if (Registry.CurrentUser.OpenSubKey(ProfilesPath, true) == null)
             {
                 Registry.CurrentUser.OpenSubKey("Software", true).CreateSubKey("ZZZ_PS_Launcher");
             }
-
-            _commits.Add(new CommitData("Рекомендованый для 3.1.1 BETA", "009742d"));
-            _commits.Add(new CommitData("Рекомендованый для 3.1.0 BETA", "31049ce"));
-            _commits.Add(new CommitData("Рекомендованый для 3.0.4 BETA", "1aff97a"));
-            _commits.Add(new CommitData("Рекомендованый для 2.8 PROD", "4ce69a6"));
-            Dictionary<string, string> compatibilityList = new();
-            compatibilityList.Add("CNBetaWin3.1.2", "master");
-            compatibilityList.Add("OSPRODWin3.0.0", "prod");
-            compatibilityList.Add("CNBetaWin3.1.1", "009742d");
-            compatibilityList.Add("CNBetaWin3.1.0", "31049ce");
-            compatibilityList.Add("CNBetaWin3.0.4", "1aff97a");
-            compatibilityList.Add("OSPRODWin2.8.0", "4ce69a6");
-            CompatibilityAnalyzer = new(compatibilityList);
+            _yoshunkoCommits.Add(new CommitData("Самый последний BETA","CNBetaWin3.1.2", "master"));
+            _yoshunkoCommits.Add(new CommitData("Самый последний PROD", "OSPRODWin3.0.0", "prod"));
+            _yoshunkoCommits.Add(new CommitData("Рекомендованый для 3.1.1 BETA", "CNBetaWin3.1.1", "009742d"));
+            _yoshunkoCommits.Add(new CommitData("Рекомендованый для 3.1.0 BETA", "CNBetaWin3.1.0", "31049ce"));
+            _yoshunkoCommits.Add(new CommitData("Рекомендованый для 3.0.4 BETA", "CNBetaWin3.0.4", "1aff97a"));
+            _yoshunkoCommits.Add(new CommitData("Рекомендованый для 2.8 PROD", "OSPRODWin2.8.0", "4ce69a6"));
+            YoshunkoCompatibility = new(_yoshunkoCommits);
             _currentProfile = RestoreSelectedProfile();
         }
 
-        public static void SetProfile(Profile profile)
+        public static void SetCurrentProfile(Profile profile)
         {
             _currentProfile = profile;
+            SaveSelectedProfile();
         }
 
         public static Profile GetCurrentProfile()
@@ -69,7 +64,7 @@ namespace ZZZ_PS_Launcher
                 return profiles.Where(prof => prof.Name == selectedname).First();
             }
 
-            return new(string.Empty, default, string.Empty);
+            return new Profile();
         }
 
 
@@ -104,6 +99,28 @@ namespace ZZZ_PS_Launcher
             }
         }
 
+        public static void RemoveProfile(Profile profile)
+        {
+            using (RegistryKey allProfilesKey = Registry.CurrentUser.OpenSubKey(ProfilesPath, true))
+            {
+                if (allProfilesKey == null)
+                {
+                    throw new InvalidOperationException($"Корневой путь {ProfilesPath} не найден в реестре.");
+                }
+
+                if (allProfilesKey.GetSubKeyNames().Contains(profile.Name))
+                {
+                    if (GetCurrentProfile().Name == profile.Name)
+                    {
+                        SetCurrentProfile(new Profile());
+                        SaveSelectedProfile();
+                    }
+
+                    allProfilesKey.DeleteSubKey(profile.Name);
+                }
+            }
+        }
+
         public static Profile[] GetAllProfiles()
         {
             using (RegistryKey profilesKey = Registry.CurrentUser.OpenSubKey(ProfilesPath, true))
@@ -113,7 +130,7 @@ namespace ZZZ_PS_Launcher
 
                 for (int i = 0; i < profiles.Length; i++)
                 {
-                    using (RegistryKey profileKey = profilesKey.OpenSubKey(profileNames[i], true))
+                    using (RegistryKey? profileKey = profilesKey.OpenSubKey(profileNames[i], true))
                     {
                         string clientPath = (string)profileKey.GetValue(ProfileKeyNames.ClientPath);
                         string serverPath = (string)profileKey.GetValue(ProfileKeyNames.ServerPath);
