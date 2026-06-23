@@ -33,7 +33,7 @@ namespace ZZZ_PS_Launcher
                 Registry.CurrentUser.OpenSubKey("Software", true).CreateSubKey("ZZZ_PS_Launcher");
             }
 
-            _yoshunkoCommits.Add(new CommitData("Самый последний BETA","CNBetaWin3.1.2", "master"));
+            _yoshunkoCommits.Add(new CommitData("Самый последний BETA", "CNBetaWin3.1.2", "master"));
             _yoshunkoCommits.Add(new CommitData("Самый последний PROD", "OSPRODWin3.0.0", "prod"));
             _yoshunkoCommits.Add(new CommitData("Рекомендованый для 3.1.1 BETA", "CNBetaWin3.1.1", "009742d"));
             _yoshunkoCommits.Add(new CommitData("Рекомендованый для 3.1.0 BETA", "CNBetaWin3.1.0", "31049ce"));

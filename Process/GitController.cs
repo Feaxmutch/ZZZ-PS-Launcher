@@ -1,27 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ZZZ_PS_Launcher
+﻿namespace ZZZ_PS_Launcher
 {
     public class GitController
     {
         private ProcessStarter _processStarter = new();
-        private string _pull = "git pull";
-        private string _checkout = "git checkout";
-        private string _reset = "git reset --hard HEAD";
-        private string _revParse = "git symbolic-ref --short -q HEAD || git rev-parse --short HEAD";
+        private string _git = "git";
+        private string _pull = "pull";
+        private string _checkout = "checkout";
+        private string _reset = "reset --hard HEAD";
+        private string _symbolicRef = "symbolic-ref --short -q HEAD";
+        private string _revParse = "rev-parse --short HEAD";
 
-        private Exicutor Exicutor { get; set; }
+        public Exicutor Exicutor { get; set; }
 
         public async Task Pull(string repPath)
         {
             switch (Exicutor)
             {
                 case Exicutor.Wsl:
-                    await _processStarter.StartProcess("wsl.exe", repPath, $"--cd \"{repPath}\"-- bash -c \"{_reset} && {_pull}\"", true);
+                    await _processStarter.StartProcess("wsl.exe", repPath, $"-- bash -c \"{_git} {_reset} && {_git} {_pull}\"", true);
                     break;
-                case Exicutor.PowerShell:
+                case Exicutor.Git:
+                    await _processStarter.StartProcess("git", repPath, $"{_reset}", true);
+                    await _processStarter.StartProcess("git", repPath, $"{_pull}", true);
                     break;
             }
         }
@@ -31,9 +31,11 @@ namespace ZZZ_PS_Launcher
             switch (Exicutor)
             {
                 case Exicutor.Wsl:
-                    await _processStarter.StartProcess("wsl.exe", repPath, $"--cd \"{repPath}\"-- bash -c \"{_reset} && {_checkout} {newCommit}\"", true);
+                    await _processStarter.StartProcess("wsl", repPath, $"-- bash -c \"{_git} {_reset} && {_git} {_checkout} {newCommit}\"", true);
                     break;
-                case Exicutor.PowerShell:
+                case Exicutor.Git:
+                    await _processStarter.StartProcess("git", repPath, $"{_reset}", true);
+                    await _processStarter.StartProcess("git", repPath, $"{_checkout} {newCommit}", true);
                     break;
             }
         }
@@ -43,9 +45,10 @@ namespace ZZZ_PS_Launcher
             switch (Exicutor)
             {
                 case Exicutor.Wsl:
-                    return _processStarter.StartProcess("wsl.exe", repPath, $"--cd \"{repPath}\"-- bash -c \"{_revParse}\"", true).Result.Output;
-                case Exicutor.PowerShell:
-                    return string.Empty;
+                    return _processStarter.StartProcess("wsl", repPath, $"-- bash -c \"{_git} {_revParse}\"", true).Result.Output;
+                case Exicutor.Git:
+                    await _processStarter.StartProcess("git", repPath, $"{_symbolicRef}", false);
+                    return _processStarter.StartProcess("git", repPath, $"{_revParse}", true).Result.Output.Trim();
             }
 
             return string.Empty;
@@ -55,6 +58,6 @@ namespace ZZZ_PS_Launcher
     public enum Exicutor
     {
         Wsl,
-        PowerShell
+        Git
     }
 }

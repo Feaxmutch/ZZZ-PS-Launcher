@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ZZZ_PS_Launcher
 {
@@ -29,10 +28,22 @@ namespace ZZZ_PS_Launcher
         private async Task RunServer(string folderPath)
         {
             if (string.IsNullOrWhiteSpace(folderPath)) return;
-            string severPath = App.GetCurrentProfile().Patches.ServerPatch;
+            Profile profile = App.GetCurrentProfile();
+            string severPath = profile.Patches.ServerPatch;
+
+            switch (profile.ServerType)
+            {
+                case ServerType.Yoshunko:
+                    _gitController.Exicutor = Exicutor.Wsl;
+                    break;
+                case ServerType.Remielle:
+                    _gitController.Exicutor = Exicutor.Git;
+                    break;
+            }
+
+
             UpdateLabel("Проверка текущего коммита");
             string commitOnServer = await _gitController.GetCurrentCommit(severPath);
-            Profile profile = App.GetCurrentProfile();
             string commitOnProfile = App.GetCurrentProfile().ServerCommit;
 
             if (commitOnProfile == "master" || commitOnProfile == "prod")
@@ -60,7 +71,7 @@ namespace ZZZ_PS_Launcher
                     result = await _remielleStarter.StartServer(folderPath);
                     break;
             }
-           
+
             _serverProcess = result.Process;
             ResetProcessField(ref _serverProcess);
         }

@@ -4,7 +4,7 @@ namespace ZZZ_PS_Launcher
 {
     public struct ProcessData
     {
-        public ProcessData(Process process, string output)
+        public ProcessData(Process process, string output, string error = "")
         {
             Process = process;
             Output = output;
@@ -13,5 +13,7 @@ namespace ZZZ_PS_Launcher
         public Process Process { get; }
 
         public string Output { get; }
+
+        public string Error { get; }
     }
 }

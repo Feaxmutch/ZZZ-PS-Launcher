@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
+﻿using System.Diagnostics;
 using System.Windows;
 
 namespace ZZZ_PS_Launcher
@@ -17,6 +14,7 @@ namespace ZZZ_PS_Launcher
                 Arguments = arguments,
                 UseShellExecute = !canOutput,
                 RedirectStandardOutput = canOutput,
+                RedirectStandardError = canOutput,
                 WindowStyle = ProcessWindowStyle.Minimized,
                 Verb = asAdmin ? "runas" : "",
             };
@@ -29,6 +27,7 @@ namespace ZZZ_PS_Launcher
                 if (process != null && canOutput)
                 {
                     string output = process.StandardOutput.ReadToEnd();
+                    string error = process.StandardError.ReadToEnd();
                     process.WaitForExit();
                     return new ProcessData(process, output);
                 }
