@@ -12,12 +12,17 @@ namespace ZZZ_PS_Launcher
 
         private static Profile _currentProfile;
         private static List<CommitData> _yoshunkoCommits = new();
+        private static List<CommitData> _remielleCommits = new();
 
         public static IReadOnlyList<CommitData> YoshunkoCommits => _yoshunkoCommits;
+
+        public static IReadOnlyList<CommitData> RemielleCommits => _remielleCommits;
 
         public static string ProfilesPath => @"Software\ZZZ_PS_Launcher";
 
         public static CompatibilityAnalyzer YoshunkoCompatibility { get; private set; }
+
+        public static CompatibilityAnalyzer RemielleCompatibility { get; private set; }
 
         public App()
         {
@@ -27,6 +32,7 @@ namespace ZZZ_PS_Launcher
             {
                 Registry.CurrentUser.OpenSubKey("Software", true).CreateSubKey("ZZZ_PS_Launcher");
             }
+
             _yoshunkoCommits.Add(new CommitData("Самый последний BETA","CNBetaWin3.1.2", "master"));
             _yoshunkoCommits.Add(new CommitData("Самый последний PROD", "OSPRODWin3.0.0", "prod"));
             _yoshunkoCommits.Add(new CommitData("Рекомендованый для 3.1.1 BETA", "CNBetaWin3.1.1", "009742d"));
@@ -34,6 +40,9 @@ namespace ZZZ_PS_Launcher
             _yoshunkoCommits.Add(new CommitData("Рекомендованый для 3.0.4 BETA", "CNBetaWin3.0.4", "1aff97a"));
             _yoshunkoCommits.Add(new CommitData("Рекомендованый для 2.8 PROD", "OSPRODWin2.8.0", "4ce69a6"));
             YoshunkoCompatibility = new(_yoshunkoCommits);
+
+            _remielleCommits.Add(new CommitData("Самый последний BETA", "CNBetaWin3.1.2", "master"));
+            RemielleCompatibility = new(_remielleCommits);
             _currentProfile = RestoreSelectedProfile();
         }
 
@@ -94,6 +103,7 @@ namespace ZZZ_PS_Launcher
                         profileKey.SetValue(ProfileKeyNames.HoyoSdkPath, profile.Patches.HoyoPatch ?? "");
                         profileKey.SetValue(ProfileKeyNames.KcpshimPath, profile.Patches.KcpshimPatch ?? "");
                         profileKey.SetValue(ProfileKeyNames.ServerCommit, profile.ServerCommit ?? "");
+                        profileKey.SetValue(ProfileKeyNames.ServerType, profile.ServerType.ToString() ?? "");
                     }
                 }
             }
@@ -137,6 +147,7 @@ namespace ZZZ_PS_Launcher
                         string hoyoPath = (string)profileKey.GetValue(ProfileKeyNames.HoyoSdkPath);
                         string kcpshimPath = (string)profileKey.GetValue(ProfileKeyNames.KcpshimPath);
                         string serverCommit = (string)profileKey.GetValue(ProfileKeyNames.ServerCommit);
+                        ServerType serverType = Enum.Parse<ServerType>(profileKey.GetValue(ProfileKeyNames.ServerType).ToString());
 
                         Patches patches = new()
                         {
@@ -146,7 +157,7 @@ namespace ZZZ_PS_Launcher
                             KcpshimPatch = kcpshimPath
                         };
 
-                        profiles[i] = new Profile(profileNames[i], patches, serverCommit);
+                        profiles[i] = new Profile(profileNames[i], patches, serverCommit, serverType);
                     }
                 }
 

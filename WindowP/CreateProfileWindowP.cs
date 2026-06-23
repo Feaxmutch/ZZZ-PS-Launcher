@@ -24,7 +24,7 @@ namespace ZZZ_PS_Launcher
             string kcpshimPath = _windowV.GetSetting(ProfileSettingName.Kcpshim);
             string name = _windowV.GetSetting(ProfileSettingName.Name);
             string commit = _windowV.GetSetting(ProfileSettingName.ServerCommit);
-            Profile testProfile = new(name, new() { ClientPatch = clientPath, HoyoPatch = hoyoPath, KcpshimPatch = kcpshimPath, ServerPatch = serverPath }, commit);
+            Profile testProfile = new(name, new() { ClientPatch = clientPath, HoyoPatch = hoyoPath, KcpshimPatch = kcpshimPath, ServerPatch = serverPath }, commit, _windowV.GetServerType());
 
             string messageStart = "Указан неверный путь к";
 
@@ -34,7 +34,7 @@ namespace ZZZ_PS_Launcher
                 return false;
             }
 
-            if (File.Exists(kcpshimPath) == false)
+            if (File.Exists(kcpshimPath) == false && testProfile.ServerType == ServerType.Yoshunko)
             {
                 MessageBox.Show($"{messageStart} kcpshim: {kcpshimPath}");
                 return false;
@@ -48,7 +48,7 @@ namespace ZZZ_PS_Launcher
 
             if (File.Exists(clientPath) == false)
             {
-                MessageBox.Show($"{messageStart} yidhari: {clientPath}");
+                MessageBox.Show($"{messageStart} клиент патчеру: {clientPath}");
                 return false;
             }
 
@@ -58,14 +58,32 @@ namespace ZZZ_PS_Launcher
                 return false;
             }
 
-            CheckVersionResult checkResult = App.YoshunkoCompatibility.IsCommitVersionCorrect(testProfile);
+            CheckVersionResult checkResult;
 
-            if (checkResult != CheckVersionResult.Correct)
+            switch (testProfile.ServerType)
             {
-                if (App.YoshunkoCompatibility.AskForContinue(checkResult) == false)
-                {
-                    return false;
-                }
+                case ServerType.Yoshunko:
+                    checkResult = App.YoshunkoCompatibility.IsCommitVersionCorrect(testProfile);
+
+                    if (checkResult != CheckVersionResult.Correct)
+                    {
+                        if (App.YoshunkoCompatibility.AskForContinue(checkResult) == false)
+                        {
+                            return false;
+                        }
+                    }
+                    break;
+                case ServerType.Remielle:
+                    checkResult = App.RemielleCompatibility.IsCommitVersionCorrect(testProfile);
+
+                    if (checkResult != CheckVersionResult.Correct)
+                    {
+                        if (App.RemielleCompatibility.AskForContinue(checkResult) == false)
+                        {
+                            return false;
+                        }
+                    }
+                    break;
             }
 
             return true;
@@ -126,6 +144,11 @@ namespace ZZZ_PS_Launcher
         {
             if (FieldsIsValide())
             {
+                if (_windowV.GetServerType() == ServerType.Remielle && _windowV.GetSetting(ProfileSettingName.Kcpshim).Trim() != string.Empty)
+                {
+                    MessageBox.Show("Вы указали путь к kcpshim, но выбрали тип сервера Remielle. \nkcpshim не требуется сервером и его запуск будет пропущен");
+                }
+
                 _windowV.ApplyFromView();
                 _windowV.Close();
             }

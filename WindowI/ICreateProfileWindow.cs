@@ -12,6 +12,7 @@
         void SetTextBox(ProfileSettingName name, Patches patches);
         string GetSetting(ProfileSettingName name);
         void ApplyFromView();
+        ServerType GetServerType();
         void Close();
     }
 }

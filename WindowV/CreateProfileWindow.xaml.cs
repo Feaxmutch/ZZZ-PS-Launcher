@@ -14,6 +14,9 @@ namespace ZZZ_PS_Launcher
         public event Action<ProfileSettingName> ClickedFromProfile;
         public event Action ClickedSave;
 
+        public ServerType[] ServerTypes => Enum.GetValues<ServerType>();
+        public ServerType SelectedType { get; set; }
+
         public IPatches Patches => _patches;
 
         public bool IsDisposed { get; private set; }
@@ -24,19 +27,12 @@ namespace ZZZ_PS_Launcher
             CreateProfileWindowP presenter = new(this);
             Closed += (s, e) => IsDisposed = true;
             List<CommitData> items = new();
-            items.Add(new CommitData("Самый последний BETA", "master"));
-            items.Add(new CommitData("Самый последний PROD", "prod"));
-
-            foreach (var commit in App.Commits)
-            {
-                items.Add(commit);
-            }
-
-            ComboBox_Commit.ItemsSource = items;
+            ComboBox_Commit.ItemsSource = new List<CommitData>(App.YoshunkoCommits);
             ComboBox_Commit.SelectedIndex = 0;
+            DataContext = this;
         }
 
-        public void ApplyFromTextBoxes()
+        public void ApplyFromView()
         {
             Patches patches = new()
             {
@@ -47,7 +43,7 @@ namespace ZZZ_PS_Launcher
             };
 
             string commit = (string)ComboBox_Commit.SelectedValue;
-            Profile profile = new(TextBox_Name.Text, patches, commit);
+            Profile profile = new(TextBox_Name.Text, patches, commit, SelectedType);
             App.SaveProfile(profile);
         }
 
@@ -89,7 +85,7 @@ namespace ZZZ_PS_Launcher
             }
         }
 
-        public string GetTextBox(ProfileSettingName name)
+        public string GetSetting(ProfileSettingName name)
         {
             switch (name)
             {
@@ -108,6 +104,11 @@ namespace ZZZ_PS_Launcher
             }
 
             return string.Empty;
+        }
+
+        public ServerType GetServerType()
+        {
+            return SelectedType;
         }
 
         private void Select_Click(object sender, EventArgs e)
@@ -157,6 +158,21 @@ namespace ZZZ_PS_Launcher
         private void SaveSettingsButton_Click(object sender, EventArgs e)
         {
             ClickedSave?.Invoke();
+        }
+
+        private void OnServerTypeChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch (SelectedType)
+            {
+                case ServerType.Yoshunko:
+                    ComboBox_Commit.ItemsSource = new List<CommitData>(App.YoshunkoCommits);
+                    break;
+                case ServerType.Remielle:
+                    ComboBox_Commit.ItemsSource = new List<CommitData>(App.RemielleCommits);
+                    break;
+            }
+
+            ComboBox_Commit.SelectedIndex = 0;
         }
     }
 }

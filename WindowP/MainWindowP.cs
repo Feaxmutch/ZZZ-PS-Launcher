@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ZZZ_PS_Launcher
 {
@@ -11,12 +12,11 @@ namespace ZZZ_PS_Launcher
         private Process _serverProcess;
         private Process _hoyoProcess;
         private Process _kcpshimProcess;
-        private string _linuxGitPull = "git pull";
-        private string _linuxGitReset = "git reset --hard HEAD";
-        private string _linuxGitRev = "git symbolic-ref --short -q HEAD || git rev-parse --short HEAD";
-        private string _linuxGitCheckout = "git checkout";
-        private string _linuxCommand = "zig build run-dpsv & zig build run-gamesv";
-        private string _linuxZigUsing = "zvm use rr";
+        private GitController _gitController = new();
+        private ProcessStarter _processStarter = new();
+        private YoshunkoStarter _yoshunkoStarter = new();
+        private RemielleStarter _remielleStarter = new();
+
 
         public MainWindowP(IMainWindow window)
         {
@@ -26,80 +26,41 @@ namespace ZZZ_PS_Launcher
             _mainFormV.WindowClosed += OnClosed;
         }
 
-        private async Task<ProcessData> StartProcess(string fileName, string directory, string arguments, bool canOutput = false)
-        {
-            ProcessStartInfo psi = new ProcessStartInfo()
-            {
-                FileName = fileName,
-                WorkingDirectory = directory,
-                Arguments = arguments,
-                UseShellExecute = !canOutput,
-                RedirectStandardOutput = canOutput,
-                WindowStyle = ProcessWindowStyle.Minimized,
-                Verb = "runas"
-            };
-            Process process = null;
-
-            try
-            {
-                process = Process.Start(psi);
-
-                if (process != null && canOutput)
-                {
-                    string output = process.StandardOutput.ReadToEnd();
-                    process.WaitForExit();
-                    return new ProcessData(process, output);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка запуска процесса: {ex.Message}");
-            }
-
-            return new ProcessData(process, string.Empty);
-        }
-
-        private async Task<string> GetCommitOnServer()
-        {
-            string serverPath = App.GetCurrentProfile().Patches.ServerPatch;
-            ProcessData result = await StartProcess("wsl.exe", serverPath, $"--cd \"{serverPath}\"-- bash -c \"{_linuxGitRev}\"", true);
-            return result.Output.TrimEnd();
-        }
-
-        private async Task SetCommitOnServer(string newCommit)
-        {
-            string serverPath = App.GetCurrentProfile().Patches.ServerPatch;
-            await StartProcess("wsl.exe", serverPath, $"--cd \"{serverPath}\"-- bash -c \"{_linuxGitReset} && {_linuxGitCheckout} {newCommit}\"", true);
-        }
-
-        private async Task PullRepository()
-        {
-            string serverPath = App.GetCurrentProfile().Patches.ServerPatch;
-            await StartProcess("wsl.exe", serverPath, $"--cd \"{serverPath}\"-- bash -c \"{_linuxGitReset} && {_linuxGitPull}\"", true);
-        }
-
         private async Task RunServer(string folderPath)
         {
             if (string.IsNullOrWhiteSpace(folderPath)) return;
-            Application.Current.Dispatcher.Invoke(() => _mainFormV.SetProgressLabel("Проверка текущего коммита"));
-            string commitOnServer = await GetCommitOnServer();
+            string severPath = App.GetCurrentProfile().Patches.ServerPatch;
+            UpdateLabel("Проверка текущего коммита");
+            string commitOnServer = await _gitController.GetCurrentCommit(severPath);
+            Profile profile = App.GetCurrentProfile();
             string commitOnProfile = App.GetCurrentProfile().ServerCommit;
 
             if (commitOnProfile == "master" || commitOnProfile == "prod")
             {
-                Application.Current.Dispatcher.Invoke(() => _mainFormV.SetProgressLabel("Вытягивание актуального репозитория"));
-                await PullRepository();
+                UpdateLabel("Вытягивание актуального репозитория");
+                await _gitController.Pull(severPath);
             }
 
             if (commitOnProfile != commitOnServer)
             {
-                Application.Current.Dispatcher.Invoke(() => _mainFormV.SetProgressLabel("Смена комита"));
-                await SetCommitOnServer(commitOnProfile);
+                UpdateLabel("Смена комита");
+                await _gitController.Checkout(severPath, commitOnProfile);
             }
 
-            Application.Current.Dispatcher.Invoke(() => _mainFormV.SetProgressLabel("Запуск сервера"));
+            UpdateLabel("Запуск сервера");
             ResetProcessField(ref _serverProcess);
-            ProcessData result = await StartProcess("wsl.exe", folderPath, $"--cd \"{folderPath}\"-- bash -i -c \"{_linuxZigUsing} & {_linuxCommand}\"", false);
+            ProcessData result = new();
+
+            switch (profile.ServerType)
+            {
+                case ServerType.Yoshunko:
+                    result = await _yoshunkoStarter.StartServer(folderPath);
+                    break;
+                case ServerType.Remielle:
+                    result = await _remielleStarter.StartServer(folderPath);
+                    break;
+            }
+           
             _serverProcess = result.Process;
             ResetProcessField(ref _serverProcess);
         }
@@ -107,8 +68,8 @@ namespace ZZZ_PS_Launcher
         private async Task RunWinExe(ProfileSettingName app, string fullPath)
         {
             if (string.IsNullOrWhiteSpace(fullPath)) return;
-            Application.Current.Dispatcher.Invoke(() => _mainFormV.SetProgressLabel($"Запуск {Path.GetFileName(fullPath)}"));
-            ProcessData result = await StartProcess(fullPath, Path.GetDirectoryName(fullPath), "", false);
+            UpdateLabel($"Запуск {Path.GetFileName(fullPath)}");
+            ProcessData result = await _processStarter.StartProcess(fullPath, Path.GetDirectoryName(fullPath), "", false);
 
             switch (app)
             {
@@ -181,28 +142,51 @@ namespace ZZZ_PS_Launcher
                 return;
             }
 
-            CheckVersionResult checkResult = App.YoshunkoCompatibility.IsCommitVersionCorrect(App.GetCurrentProfile());
+            CheckVersionResult checkResult;
 
-            if (checkResult != CheckVersionResult.Correct)
+            switch (profile.ServerType)
             {
-                if (App.YoshunkoCompatibility.AskForContinue(checkResult) == false)
-                {
-                    return;
-                }
+                case ServerType.Yoshunko:
+                    checkResult = App.YoshunkoCompatibility.IsCommitVersionCorrect(profile);
+
+                    if (checkResult != CheckVersionResult.Correct)
+                    {
+                        if (App.YoshunkoCompatibility.AskForContinue(checkResult) == false)
+                        {
+                            return;
+                        }
+                    }
+                    break;
+                case ServerType.Remielle:
+                    checkResult = App.RemielleCompatibility.IsCommitVersionCorrect(profile);
+
+                    if (checkResult != CheckVersionResult.Correct)
+                    {
+                        if (App.RemielleCompatibility.AskForContinue(checkResult) == false)
+                        {
+                            return;
+                        }
+                    }
+                    break;
             }
 
             KillAll();
             await RunServer(profile.Patches.ServerPatch);
             await RunWinExe(ProfileSettingName.Hoyo, profile.Patches.HoyoPatch);
-            await RunWinExe(ProfileSettingName.Kcpshim, profile.Patches.KcpshimPatch);
+            if (profile.ServerType == ServerType.Yoshunko) await RunWinExe(ProfileSettingName.Kcpshim, profile.Patches.KcpshimPatch);
             await RunWinExe(ProfileSettingName.Client, profile.Patches.ClientPatch);
-            Application.Current.Dispatcher.Invoke(() => _mainFormV.SetProgressLabel(string.Empty));
+            UpdateLabel(string.Empty);
         }
 
         private void OnClosed()
         {
             KillAll();
             App.SaveSelectedProfile();
+        }
+
+        private void UpdateLabel(string content)
+        {
+            Application.Current.Dispatcher.Invoke(() => _mainFormV.SetProgressLabel(content));
         }
     }
 }
