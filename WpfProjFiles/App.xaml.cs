@@ -41,7 +41,8 @@ namespace ZZZ_PS_Launcher
             _yoshunkoCommits.Add(new CommitData("Рекомендованый для 2.8 PROD", "OSPRODWin2.8.0", "4ce69a6"));
             YoshunkoCompatibility = new(_yoshunkoCommits);
 
-            _remielleCommits.Add(new CommitData("Самый последний BETA", "CNBetaWin3.1.2", "master"));
+            _remielleCommits.Add(new CommitData("Самый последний BETA", "CNBetaWin3.1.3", "master"));
+            _remielleCommits.Add(new CommitData("Рекомендованый для 3.1.2 BETA", "CNBetaWin3.1.2", "8960978"));
             RemielleCompatibility = new(_remielleCommits);
             _currentProfile = RestoreSelectedProfile();
         }
