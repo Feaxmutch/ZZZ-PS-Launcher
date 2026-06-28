@@ -31,7 +31,7 @@ namespace ZZZ_PS_Launcher
                 return CheckVersionResult.Unknown;
             }
 
-            if (_compatibilityList.Any(commit => commit.Value == profile.ServerCommit) == false)
+            if (_compatibilityList.Any(commit => commit.Value == profile.ServerCommit && commit.ClientVersion == info) == false)
             {
                 return CheckVersionResult.Uncorrect;
             }
