@@ -183,7 +183,7 @@ namespace ZZZ_PS_Launcher
 
             KillAll();
             await RunServer(profile.Patches.ServerPatch);
-            await RunWinExe(ProfileSettingName.Hoyo, profile.Patches.HoyoPatch);
+            if (profile.ServerType == ServerType.Yoshunko) await RunWinExe(ProfileSettingName.Hoyo, profile.Patches.HoyoPatch);
             if (profile.ServerType == ServerType.Yoshunko) await RunWinExe(ProfileSettingName.Kcpshim, profile.Patches.KcpshimPatch);
             await RunWinExe(ProfileSettingName.Client, profile.Patches.ClientPatch);
             UpdateLabel(string.Empty);

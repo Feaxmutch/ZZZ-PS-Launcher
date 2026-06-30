@@ -40,7 +40,7 @@ namespace ZZZ_PS_Launcher
                 return false;
             }
 
-            if (File.Exists(hoyoPath) == false)
+            if (File.Exists(hoyoPath) == false && testProfile.ServerType == ServerType.Yoshunko)
             {
                 MessageBox.Show($"{messageStart} hoyo-sdk: {hoyoPath}");
                 return false;
@@ -147,6 +147,11 @@ namespace ZZZ_PS_Launcher
                 if (_windowV.GetServerType() == ServerType.Remielle && _windowV.GetSetting(ProfileSettingName.Kcpshim).Trim() != string.Empty)
                 {
                     MessageBox.Show("Вы указали путь к kcpshim, но выбрали тип сервера Remielle. \nkcpshim не требуется сервером и его запуск будет пропущен");
+                }
+
+                if (_windowV.GetServerType() == ServerType.Remielle && _windowV.GetSetting(ProfileSettingName.Hoyo).Trim() != string.Empty)
+                {
+                    MessageBox.Show("Вы указали путь к HoyoSdk, но выбрали тип сервера Remielle. \nHoyoSdk не требуется сервером и его запуск будет пропущен");
                 }
 
                 _windowV.ApplyFromView();
